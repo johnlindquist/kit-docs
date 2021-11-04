@@ -33,3 +33,18 @@ let html = await highlight(`
 `)
 await div(html)
 ```
+
+## Create a New Window
+
+Use the `show` method to spawn a new, persisting window that is disconnected from the script.
+
+Much future work will be put into components/widgets that can run outside of the main app UI, but for now, it simply display any html you send to it:
+
+```js
+show(`
+<div class="bg-black text-white h-screen p-5">
+    Hello there!
+<div>
+
+`)
+```
