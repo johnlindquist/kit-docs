@@ -4,11 +4,11 @@ The Script Kit community lives on GitHub discussions.
 
 This is the place to:
 
-- 🥰 [Share scripts](https://github.com/johnlindquist/kit/discussions/categories/share)
-- 🙏 [Ask questions](https://github.com/johnlindquist/kit/discussions/categories/q-a)
-- 💡 [Discuss ideas](https://github.com/johnlindquist/kit/discussions/categories/ideas)
-- 😱 [Report errors](https://github.com/johnlindquist/kit/discussions/categories/error)
+- 🥰 &ensp;[Share scripts](https://github.com/johnlindquist/kit/discussions/categories/share)
+- 🙏 &ensp;[Ask questions](https://github.com/johnlindquist/kit/discussions/categories/q-a)
+- 💡 &ensp;[Discuss ideas](https://github.com/johnlindquist/kit/discussions/categories/ideas)
+- 😱 &ensp;[Report errors](https://github.com/johnlindquist/kit/discussions/categories/error)
 
 Or just hit _Enter_ to browse all.
 
-I'll do my best to response ASAP!
+> We'll do our best to respond ASAP!

@@ -1,0 +1,1 @@
+# Sync $PATH from Terminal to Kit.app

@@ -1,0 +1,1 @@
+# Generate bin files
