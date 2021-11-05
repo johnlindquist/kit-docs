@@ -1,3 +1,5 @@
+<meta path="help/terminal-app">
+      
 Script Kit bundles [zx](https://github.com/google/zx) as the global `$`
 
 Example from their docs (make sure to `cd` to the proper dir)

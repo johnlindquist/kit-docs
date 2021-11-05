@@ -1,3 +1,5 @@
+<meta path="kit/add-kenv-to-profile">
+      
 # Add ~/.kenv/bin to $PATH
 
 Each time you create a script, Script Kit also generates a command based on the name you can run from the terminal.

@@ -1,3 +1,5 @@
+<meta path="help/faq">
+      
 ## What is Script Kit?
 
 Script Kit is an open-source dev tool for creating, running, editing, and sharing scripts.

@@ -1,3 +1,5 @@
+<meta path="kit/manage-npm">
+      
 # Manage npm Packages
 
 This will help you install/uninstall packages from your `~/.kenv/node_modules`

@@ -1,3 +1,5 @@
+<meta path="help/get-help">
+      
 # Get Help on Github Discussions
 
 The Script Kit community lives on GitHub discussions.

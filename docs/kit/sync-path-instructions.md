@@ -1,3 +1,5 @@
+<meta path="kit/sync-path-instructions">
+      
 # Sync $PATH from Terminal to Kit.app
 
 Have a command that's working in your terminal, but doesn't work when you call it with Script Kit?

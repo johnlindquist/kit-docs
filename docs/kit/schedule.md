@@ -1,3 +1,5 @@
+<meta path="kit/schedule">
+      
 # View Schedule
 
 List all of the scheduled scripts and see the next time time they'll run.

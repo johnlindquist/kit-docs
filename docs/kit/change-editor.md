@@ -1,3 +1,5 @@
+<meta path="kit/change-editor">
+      
 # Change Editor
 
 This will re-prompt you to pick an editor from your PATH by updating your kenv `.env`.

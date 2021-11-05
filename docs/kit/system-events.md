@@ -1,3 +1,5 @@
+<meta path="kit/system-events">
+      
 # View System Event Scripts
 
 This menu shows scripts that run on system events.

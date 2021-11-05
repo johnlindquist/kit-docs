@@ -1,3 +1,5 @@
+<meta path="kit/credits">
+      
 # Credits
 
 ## John Lindquist

@@ -1,3 +1,5 @@
+<meta path="help/shortcuts">
+      
 ## Adding Keyboard Shortcuts
 
 Add a global shortcut to any script by adding the `//Shortcut: ` metadata:

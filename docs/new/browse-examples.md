@@ -1,3 +1,5 @@
+<meta path="new/browse-examples">
+      
 ## Get Featured
 
 Simply share your script to Script Kit's [GitHub Discussions](https://github.com/johnlindquist/kit/discussions/categories/share) in the "share" category and it will automatically (after a review period) get added to [scriptkit.com](https://scriptkit.com)

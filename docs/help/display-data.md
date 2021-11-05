@@ -1,3 +1,5 @@
+<meta path="help/display-data">
+      
 ## Display HTML
 
 Use the `div` method to display html.

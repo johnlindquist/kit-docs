@@ -1,3 +1,5 @@
+<meta path="new/new-from-url">
+      
 ## Create a Script from a Gist
 
 In the `Run` tab, with a script selected, hit `cmd+g` (think "g" for "gist").

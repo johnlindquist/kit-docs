@@ -1,3 +1,5 @@
+<meta path="help/join">
+      
 # Subscribe to the Newsletter
 
 - Featured Scripts

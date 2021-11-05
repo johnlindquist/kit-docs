@@ -1,3 +1,5 @@
+<meta path="kit/add-kit-to-profile">
+      
 # Add ~/.kit/bin to $PATH
 
 > This is similar to VS Code's "Add `code` to path"
