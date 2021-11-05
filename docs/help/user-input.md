@@ -1,6 +1,6 @@
 <meta path="help/user-input">
       
-## User Input
+# User Input
 
 Receive text from a user by adding `arg` to your script:
 

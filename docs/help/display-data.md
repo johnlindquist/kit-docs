@@ -16,6 +16,8 @@ The second argument of `div` allows you to add [tailwind](https://tailwindcss.co
 await div(`<h1>Hi</h1>`, `p-5`)
 ```
 
+# Display Data
+
 ## Display Markdown
 
 Pass a string of markdown to the `md` method. This will convert the markdown to html which you can then pass to the `div`

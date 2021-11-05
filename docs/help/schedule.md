@@ -1,6 +1,6 @@
 <meta path="help/schedule">
       
-## Schedule a Script
+# Schedule a Script
 
 Use cron syntax to run scripts on a schedule:
 

@@ -1,5 +1,7 @@
 <meta path="new/new">
       
+# Creating Scripts
+
 ## Pro-tips
 
 1. The fastest way to create a script: Launch the app as you normally would, then type
