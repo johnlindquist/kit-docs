@@ -1,3 +1,4 @@
+console.log("create-docs start")
 import "@johnlindquist/kit"
 import { getMetadata } from "@johnlindquist/kit/core/utils"
 let { gql, GraphQLClient } = await npm("graphql-request")
@@ -41,6 +42,8 @@ let endpoint = "https://api.github.com/graphql"
 const categoryKey: keyof Category = await arg<
   keyof Category
 >("Category", Object.keys(Category))
+
+console.log({categoryKey})
 
 let category = {
   name: categoryKey as string,
