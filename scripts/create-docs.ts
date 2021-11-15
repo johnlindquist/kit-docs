@@ -45,58 +45,58 @@ const categoryKey: keyof Category = await arg<
 
 console.log({ categoryKey })
 
-let category = {
-  name: categoryKey as string,
-  value: (Category as any)[categoryKey] as string,
-}
+// let category = {
+//   name: categoryKey as string,
+//   value: (Category as any)[categoryKey] as string,
+// }
 
-console.log({ category })
+// console.log({ category })
 
-let client = new GraphQLClient(endpoint, {
-  headers: {
-    "GraphQL-Features": "discussions_api",
-    authorization: `Bearer ${await env(
-      "DISCUSSIONS_TOKEN"
-    )}`,
-  },
-})
+// let client = new GraphQLClient(endpoint, {
+//   headers: {
+//     "GraphQL-Features": "discussions_api",
+//     authorization: `Bearer ${await env(
+//       "DISCUSSIONS_TOKEN"
+//     )}`,
+//   },
+// })
 
-let query = gql`
-  query ($categoryId: ID) {
-    repository(owner: "johnlindquist", name: "kit") {
-      discussions(
-        first: 100
-        categoryId: $categoryId
-        orderBy: { field: CREATED_AT, direction: DESC }
-      ) {
-        # type: DiscussionConnection
-        totalCount # Int!
-        nodes {
-          title
-          url
-          author {
-            ... on User {
-              twitterUsername
-              name
-            }
-            login
-            avatarUrl
-            url
-          }
-          body
-          id
-          createdAt
-        }
-      }
-    }
-  }
-`
+// let query = gql`
+//   query ($categoryId: ID) {
+//     repository(owner: "johnlindquist", name: "kit") {
+//       discussions(
+//         first: 100
+//         categoryId: $categoryId
+//         orderBy: { field: CREATED_AT, direction: DESC }
+//       ) {
+//         # type: DiscussionConnection
+//         totalCount # Int!
+//         nodes {
+//           title
+//           url
+//           author {
+//             ... on User {
+//               twitterUsername
+//               name
+//             }
+//             login
+//             avatarUrl
+//             url
+//           }
+//           body
+//           id
+//           createdAt
+//         }
+//       }
+//     }
+//   }
+// `
 
-let response = await client.request(query, {
-  categoryId: category.value,
-})
+// let response = await client.request(query, {
+//   categoryId: category.value,
+// })
 
-console.log({ repo: response.repository })
+// console.log({ repo: response.repository })
 
 // let discussions: Discussion[] =
 //   response.repository.discussions.nodes.map(
