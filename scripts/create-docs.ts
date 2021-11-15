@@ -181,7 +181,7 @@ let loadedScripts = discussions.map(
   }
 )
 
-await ensureDir(path.resolve("data"))
-let docsPath = path.resolve("data", `docs.json`)
+await ensureDir(kitPath("data"))
+let docsPath = kitPath("data", `docs.json`)
 console.log({ docsPath })
 await outputJson(docsPath, loadedScripts)

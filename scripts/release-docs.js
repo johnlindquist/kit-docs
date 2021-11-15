@@ -24,7 +24,7 @@ let releaseResponse = await github.rest.repos.createRelease(
 )
 
 let name = "docs.json"
-let docsPath = path.resolve("data", name)
+let docsPath = kitPath("data", name)
 console.log({ docsPath })
 
 let headers = {
