@@ -2,13 +2,15 @@ let { format } = await npm("date-fns")
 let { context } = await npm("@actions/github")
 let { Octokit } = await npm("@octokit/rest")
 
-let { owner, repo } = context.repo
+console.log(`Past npm...`)
 
-let github = new Octokit({
-  auth: await env("GITHUB_TOKEN"),
-})
+// let { owner, repo } = context.repo
 
-console.log({ github })
+// let github = new Octokit({
+//   auth: await env("GITHUB_TOKEN"),
+// })
+
+// console.log({ github })
 
 // let dateTag = format(new Date(), "yyyy-MM-dd-HH-mm")
 // let releaseResponse = await github.rest.repos.createRelease(
