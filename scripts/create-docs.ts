@@ -96,8 +96,6 @@ let response = await client.request(query, {
   categoryId: category.value,
 })
 
-console.log({ repo: response.repository })
-
 let discussions: Discussion[] =
   response.repository.discussions.nodes.map(
     (d: Discussion) => {
