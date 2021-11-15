@@ -31,6 +31,9 @@ let headers = {
   "content-type": "application/json",
 }
 
+let data = await readFile(docsPath, "utf-8")
+console.log(`DATA:`, data.slice(0, 50))
+
 let uploadResponse =
   await github.rest.repos.uploadReleaseAsset({
     headers,
@@ -38,7 +41,7 @@ let uploadResponse =
     repo,
     release_id: releaseResponse.data.id,
     name: name,
-    data: await readFile(docsPath),
+    data,
   })
 
 console.log(
