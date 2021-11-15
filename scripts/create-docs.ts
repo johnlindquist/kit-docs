@@ -1,9 +1,9 @@
 console.log("create-docs start")
-// import "@johnlindquist/kit"
-// import { getMetadata } from "@johnlindquist/kit/core/utils"
-// let { gql, GraphQLClient } = await npm("graphql-request")
-// let slugify = await npm("slugify")
-
+import "@johnlindquist/kit"
+import { getMetadata } from "@johnlindquist/kit/core/utils"
+let { gql, GraphQLClient } = await npm("graphql-request")
+let slugify = await npm("slugify")
+console.log("👁 made it past npm")
 // interface Author {
 //   login: string
 //   avatarUrl: string
