@@ -27,6 +27,10 @@ let name = "docs.json"
 let docsPath = path.resolve("data", name)
 console.log({ docsPath })
 
+let headers = {
+  "content-type": "application/json",
+}
+
 let uploadResponse =
   await github.rest.repos.uploadReleaseAsset({
     headers,
