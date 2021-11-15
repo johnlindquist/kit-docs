@@ -50,6 +50,8 @@ let category = {
   value: (Category as any)[categoryKey] as string,
 }
 
+console.log({ category })
+
 let client = new GraphQLClient(endpoint, {
   headers: {
     "GraphQL-Features": "discussions_api",
@@ -94,96 +96,100 @@ let response = await client.request(query, {
   categoryId: category.value,
 })
 
-let discussions: Discussion[] =
-  response.repository.discussions.nodes.map(
-    (d: Discussion) => {
-      const slug = slugify(d.title, {
-        lower: true,
-        strict: true,
-      })
+console.log({ repo: response.repository })
 
-      return {
-        ...d,
-        slug,
-      }
-    }
-  )
+// let discussions: Discussion[] =
+//   response.repository.discussions.nodes.map(
+//     (d: Discussion) => {
+//       const slug = slugify(d.title, {
+//         lower: true,
+//         strict: true,
+//       })
 
-let loadedScripts = discussions.map(
-  ({
-    author,
-    body,
-    createdAt,
-    id,
-    slug,
-    title,
-    url: discussion,
-  }) => {
-    let url =
-      body.match(
-        /(?<=Install.*)https:\/\/gist.*js(?=\"|\))/gim
-      )?.[0] || ""
-    let metadata = getMetadata(body)
+//       return {
+//         ...d,
+//         slug,
+//       }
+//     }
+//   )
 
-    let [, dir, file] = body.match(
-      /(?<=<meta path=")(.*)\/(.*)(?=")/
-    ) || [null, "", ""]
+// let loadedScripts = discussions.map(
+//   ({
+//     author,
+//     body,
+//     createdAt,
+//     id,
+//     slug,
+//     title,
+//     url: discussion,
+//   }) => {
+//     let url =
+//       body.match(
+//         /(?<=Install.*)https:\/\/gist.*js(?=\"|\))/gim
+//       )?.[0] || ""
+//     let metadata = getMetadata(body)
 
-    let [description] = body.match(
-      /(?<=<meta description=")(.*)(?=")/
-    ) || [""]
-    let [tag] = body.match(/(?<=<meta tag=")(.*)(?=")/) || [
-      "",
-    ]
+//     let [, dir, file] = body.match(
+//       /(?<=<meta path=")(.*)\/(.*)(?=")/
+//     ) || [null, "", ""]
 
-    let content = body
-    let prevLength = 0
+//     let [description] = body.match(
+//       /(?<=<meta description=")(.*)(?=")/
+//     ) || [""]
+//     let [tag] = body.match(/(?<=<meta tag=")(.*)(?=")/) || [
+//       "",
+//     ]
 
-    let i = 0
-    for (let s of body.matchAll(
-      /(`{3}js)(.{5,}?)(`{3})/gs
-    )) {
-      i++
-      if (s[2] && s.index) {
-        let c = Buffer.from(s[2]).toString("base64url")
-        let name = `${slug}-example-${i}`
-        let link = `\n\n[Create script from example below](kit:snippet?name=${name}&content=${c})\n`
+//     let content = body
+//     let prevLength = 0
 
-        let index = s.index + prevLength
-        content = [
-          content.slice(0, index),
-          link,
-          content.slice(index),
-        ].join("")
-        prevLength += link.length
-      }
-    }
+//     let i = 0
+//     for (let s of body.matchAll(
+//       /(`{3}js)(.{5,}?)(`{3})/gs
+//     )) {
+//       i++
+//       if (s[2] && s.index) {
+//         let c = Buffer.from(s[2]).toString("base64url")
+//         let name = `${slug}-example-${i}`
+//         let link = `\n\n[Create script from example below](kit:snippet?name=${name}&content=${c})\n`
 
-    return {
-      ...metadata,
-      avatar: author.avatarUrl,
-      user: author.login,
-      author: author.name,
-      twitter: author.twitterUsername,
-      discussion,
-      url,
-      title,
-      command: slug,
-      content,
-      extension: Extension.md,
-      dir,
-      file,
-      description,
-      tag,
-    }
-  }
-)
+//         let index = s.index + prevLength
+//         content = [
+//           content.slice(0, index),
+//           link,
+//           content.slice(index),
+//         ].join("")
+//         prevLength += link.length
+//       }
+//     }
 
-await ensureDir(path.resolve("data"))
-await outputJson(
-  path.resolve(
-    "data",
-    `${category.name.toLowerCase()}.json`
-  ),
-  loadedScripts
-)
+//     return {
+//       ...metadata,
+//       avatar: author.avatarUrl,
+//       user: author.login,
+//       author: author.name,
+//       twitter: author.twitterUsername,
+//       discussion,
+//       url,
+//       title,
+//       command: slug,
+//       content,
+//       extension: Extension.md,
+//       dir,
+//       file,
+//       description,
+//       tag,
+//     }
+//   }
+// )
+
+// console.log({ loadedScripts })
+
+// await ensureDir(path.resolve("data"))
+// await outputJson(
+//   path.resolve(
+//     "data",
+//     `${category.name.toLowerCase()}.json`
+//   ),
+//   loadedScripts
+// )
