@@ -14,7 +14,7 @@ jobs:
         uses: johnlindquist/kit-action@main
         with:
           script: "create-docs" # The name of a script in your ./scripts dir
-        args: "Docs"
+          args: "Docs"
         env:
           REPO_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
   example:
