@@ -12,7 +12,7 @@ let github = new Octokit({
   auth: await env("REPO_TOKEN"),
 })
 
-console.log({ github })
+// console.log({ github })
 
 let dateTag = format(new Date(), "yyyy-MM-dd-HH-mm")
 let releaseResponse = await github.rest.repos.createRelease(
@@ -25,6 +25,7 @@ let releaseResponse = await github.rest.repos.createRelease(
 
 let name = "docs.json"
 let docsPath = path.resolve("data", name)
+console.log({ docsPath })
 
 let uploadResponse =
   await github.rest.repos.uploadReleaseAsset({
@@ -32,7 +33,7 @@ let uploadResponse =
     owner,
     repo,
     release_id: releaseResponse.data.id,
-    name,
+    name: name,
     data: await readFile(docsPath),
   })
 

@@ -181,13 +181,7 @@ let loadedScripts = discussions.map(
   }
 )
 
-console.log({ loadedScripts })
-
 await ensureDir(path.resolve("data"))
-await outputJson(
-  path.resolve(
-    "data",
-    `${category.name.toLowerCase()}.json`
-  ),
-  loadedScripts
-)
+let docsPath = path.resolve("data", `docs.json`)
+console.log({ docsPath })
+await outputJson(docsPath, loadedScripts)
