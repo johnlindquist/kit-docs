@@ -1,9 +1,9 @@
-console.log("create-docs start")
 import "@johnlindquist/kit"
 import { getMetadata } from "@johnlindquist/kit/core/utils"
+
 let { gql, GraphQLClient } = await npm("graphql-request")
 let slugify = await npm("slugify")
-console.log("👁 made it past npm")
+
 interface Author {
   login: string
   avatarUrl: string
@@ -30,27 +30,7 @@ export enum Extension {
   mjs = ".mjs",
 }
 
-export enum Category {
-  Announcements = "MDE4OkRpc2N1c3Npb25DYXRlZ29yeTMyODIwMDgw",
-  Guide = "MDE4OkRpc2N1c3Npb25DYXRlZ29yeTMyODc5NjIx",
-  Share = "MDE4OkRpc2N1c3Npb25DYXRlZ29yeTMyMDg0MTcw",
-  Docs = "DIC_kwDOEu7MBc4B_u-c",
-}
-
 let endpoint = "https://api.github.com/graphql"
-
-const categoryKey: keyof Category = await arg<
-  keyof Category
->("Category", Object.keys(Category))
-
-console.log({ categoryKey })
-
-let category = {
-  name: categoryKey as string,
-  value: (Category as any)[categoryKey] as string,
-}
-
-console.log({ category })
 
 let client = new GraphQLClient(endpoint, {
   headers: {
@@ -92,8 +72,9 @@ let query = gql`
   }
 `
 
+let categoryId = "DIC_kwDOEu7MBc4B_u-c"
 let response = await client.request(query, {
-  categoryId: category.value,
+  categoryId,
 })
 
 let discussions: Discussion[] =

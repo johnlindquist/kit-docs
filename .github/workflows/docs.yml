@@ -13,14 +13,8 @@ jobs:
       - name: Create Docs
         uses: johnlindquist/kit-action@main
         with:
-          script: "create-docs" # The name of a script in your ./scripts dir
+          script: "docs-steps" # The name of a script in your ./scripts dir
           args: "Docs"
         env:
           DISCUSSIONS_TOKEN: "${{ secrets.DISCUSSIONS_TOKEN }}"
-
-      - name: Release Docs
-        uses: johnlindquist/kit-action@main
-        with:
-          script: "release-docs" # The name of a script in your ./scripts dir
-        env:
           REPO_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
