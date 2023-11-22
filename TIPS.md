@@ -2,115 +2,223 @@
 
 Tips are a collection of answers to user questions in GitHub Discussions and our Discord organized by topic.
 
-## Prompt
+## Audio
 
-### Allow Any Text Input When Choices Are Displayed
+### Cancel Audio with Keyboard Shortcut
 
-By default, `arg` is in "strict" mode which prevents submitting the prompt if your text input doesn't match a choice in the list. You can disable this by passing `strict: false` to `arg`:
-
-```js
-// Name: Strict Mode Demo
-
-import "@johnlindquist/kit"
-
-let fruit = await arg({
-    placeholder: "Select a fruit",
-    hint: "Type 'Grape' and hit enter",
-    strict: false
-}, ["Apple", "Banana", "Cherry"])
-
-await div(md(fruit))
-```
-
-### Select a Choice with a Single Keystroke
-
-Surround a letter in square brackets to make it a shortcut for a choice:
-
-```js
-// Name: Single Keystroke Demo
+```ts
+// Name: Cancel Audio with Keyboard Shortcut
+// Group: Audio
 
 import "@johnlindquist/kit"
 
-let choice = await arg({
-  placeholder: "Choose a color",
-  choices: [
-    {name: "[R]ed", value: "red"},
-    {name: "[G]reen", value: "green"},
-    {name: "[B]lue", value: "blue"},
-  ],
+// Start saying long thing
+say(`I have so much to say I'm just going to keep talking until someone shuts me up`)
+
+registerShortcut("opt x", () => {
+  say("") //will cancel
+  process.exit() // you need to exit or else the shortcuts will keep the script active
 })
 
-await div(md(`You chose ${choice}`))
-```
-
-### Adjust the CSS of Choices
-
-You can pass a `css` object to `arg` to adjust the CSS of the choices, then use the `className` property of each choice to apply a class to that choice:
-
-```js
-import "@johnlindquist/kit"
-
-let choice = await arg({
-  css: `
-.light-purple {
-  background-color: #c8a2c8;
-}  
-.medium-purple {
-  background-color: #967bb6;
-}
-.dark-purple {
-  background-color: #5d4777;
-}
-
-.focused {
-  box-shadow: inset .5rem 0 0 0 #ffffffee;
-}
-  `,
-  placeholder: "Choose a shade of purple",
-  choices: [
-    { name: "[L]ight Purple", value: "light-purple", className: "light-purple", focusedClassName: "focused" },
-    { name: "[M]edium Purple", value: "medium-purple", className: "medium-purple", focusedClassName: "focused" },
-    { name: "[D]ark Purple", value: "dark-purple", className: "dark-purple", focusedClassName: "focused" },
-  ],
+registerShortcut("opt y", () => {
+  say("You're done", {
+    name: "Alice",
+    rate: 0.5,
+    pitch: 2,
+  })
+  process.exit()
 })
 
-await div(md(`You chose ${choice}`))
 ```
 
-## Progress Panel
+## Clipboard
 
-```js
-// Name: Progress Panel
+### Format Latest Clipboard Item
+
+```ts
+// Name: Format Latest Clipboard Item
+// Group: Clipboard
 
 import "@johnlindquist/kit"
 
-let first = ""
-let second = ""
-let third = ""
-let progressPanel = () =>
-  md(`# Progress: 
-- ${first || "Waiting first value"}
-- ${second || "Waiting second value"}
-- ${third || "Waiting third value"}
-`)
+let text = await paste()
+let newText = text.replace("a", "b")
+await setSelectedText(newText)
 
-first = await arg("Enter the first value", progressPanel)
-second = await arg("Enter the second value", progressPanel)
-third = await arg("Enter the third value", progressPanel)
+```
 
-await div(
-  md(`# You entered:
-- ${first}
-- ${second}
-- ${third}
-`)
+## Data
+
+### Database Read/Write Example
+
+```ts
+// Name: Database Read/Write Example
+// Description: Add/remove items from a list of fruit
+// Group: Data
+
+import "@johnlindquist/kit"
+
+let fruitDb = await db(["apple", "banana", "orange"])
+
+while (true) {
+  let fruitToAdd = await arg("Add a fruit", md(fruitDb.items.map(fruit => `* ${fruit}`).join("\n")))
+
+  fruitDb.items.push(fruitToAdd)
+  await fruitDb.write()
+
+  let fruitToDelete = await arg("Delete a fruit", fruitDb.items)
+
+  fruitDb.items = fruitDb.items.filter(fruit => fruit !== fruitToDelete)
+
+  await fruitDb.write()
+}
+
+```
+
+### Edit the Keys and Values of an Object
+
+```ts
+// Name: Edit the Keys and Values of an Object
+// Group: Data
+
+import "@johnlindquist/kit"
+
+let data = {
+  name: "John",
+  age: 42,
+  location: "USA",
+}
+
+let result = await fields(
+  Object.entries(data).map(([key, value]) => ({
+    name: key,
+    label: key,
+    value: String(value),
+  }))
 )
+
+let newData = Object.entries(data).map(([key], i) => ({
+  [key]: result[i],
+}))
+
+inspect(newData)
+
 ```
+
+### Populate db example
+
+```ts
+// Name: Populate db example
+// Description: Shows how to pre-populate database
+// Group: Data
+
+// Pass in a function to generate data for the db
+// Because this script is named "db-basic.js"
+// The database is found at "~/.kenv/db/_db-basic.json"
+
+let reposDb = await db(async () => {
+  let response = await get("https://api.github.com/users/johnlindquist/repos")
+
+  return response.data.map(({ name, description, html_url }) => {
+    return {
+      name,
+      description,
+      value: html_url,
+    }
+  })
+})
+let repoUrl = await arg("Select repo to open:", reposDb.items)
+
+exec(`open "${repoUrl}"`)
+
+```
+
+## Desktop
+
+### Get Active App on Mac
+
+```ts
+// Name: Get Active App on Mac
+// Group: Desktop
+
+// MAC ONLY!
+import "@johnlindquist/kit"
+
+// Always hide immmediately if you're not going to show a prompt
+await hide()
+
+// Note: This uses "https://www.npmjs.com/package/@johnlindquist/mac-frontmost" inside Kit.app,
+// but you can import that package directly (or another similar package) if you prefer
+let info = await getActiveAppInfo()
+if (info.bundleIdentifier === "com.google.Chrome") {
+  await keyboard.pressKey(Key.LeftSuper, Key.T)
+  await keyboard.releaseKey(Key.LeftSuper, Key.T)
+}
+
+```
+
+## Markdown
+
+### Generate Tips.md from Scripts
+
+```ts
+// Name: Generate Tips.md from Scripts
+// Group: Markdown
+
+import "@johnlindquist/kit"
+
+let scripts = await getScripts()
+
+// Check if kit-docs is a kenv
+
+let kenv = path.basename(projectPath())
+let isKitDocsInAKenv = kenv !== ".kenv"
+let outFilePath = projectPath("TIPS.md")
+
+if (isKitDocsInAKenv) {
+  scripts = scripts.filter(script => script.kenv === kenv)
+}
+
+scripts.sort((a, b) => a.group.localeCompare(b.group))
+
+// Group by group
+let groups = {}
+for (let script of scripts) {
+  if (!groups[script.group]) groups[script.group] = []
+  groups[script.group].push(script)
+}
+
+// Convert Groups into Markdown h2's with the Content Below
+let markdownBody = ``
+for (let [group, scripts] of Object.entries(groups)) {
+  markdownBody += `## ${group}\n\n`
+  for (let script of scripts.sort((a, b) => a.name.localeCompare(b.name))) {
+    let content = await readFile(script.filePath, "utf8")
+    markdownBody += `### ${script.name}\n\n`
+    markdownBody += "```ts\n"
+    markdownBody += content
+    markdownBody += "\n```\n\n"
+  }
+}
+
+let markdown = `# Tips
+
+Tips are a collection of answers to user questions in GitHub Discussions and our Discord organized by topic.
+
+${markdownBody}
+`.trim()
+
+await writeFile(outFilePath, markdown)
+
+```
+
+## Prompt
 
 ### Force a User to Pick an Option
 
-```js
+```ts
 // Name: Force a User to Pick an Option
+// Group: Prompt
 
 import "@johnlindquist/kit"
 
@@ -137,26 +245,49 @@ animal = await arg(
 )
 
 await div(md(`# Phew! You made it! You chose ${animal}`))
+
 ```
 
+### Progress Panel
 
-## Clipboard
+```ts
+// Name: Progress Panel
+// Group: Prompt
 
-### Format Latest Clipboard Item
-
-```js
 import "@johnlindquist/kit"
 
-let text = await paste()
-let newText = text.replace("a", "b")
-await setSelectedText(newText)
-```
+let first = ""
+let second = ""
+let third = ""
+let progressPanel = () =>
+  md(`# Progress: 
+- ${first || "Waiting first value"}
+- ${second || "Waiting second value"}
+- ${third || "Waiting third value"}
+`)
 
-## Shortcuts
+first = await arg("Enter the first value", progressPanel)
+second = await arg("Enter the second value", progressPanel)
+third = await arg("Enter the third value", progressPanel)
+
+await div(
+  md(`# You entered:
+- ${first}
+- ${second}
+- ${third}
+`)
+)
+
+```
 
 ### Return to the Main Script on Escape
 
-```js
+```ts
+// Name: Return to the Main Script on Escape
+// Group: Prompt
+
+import "@johnlindquist/kit"
+
 await div({
   html: md(`# Hello`),
   shortcuts: [
@@ -168,41 +299,15 @@ await div({
     },
   ],
 })
+
 ```
-
-## Data
-
-### Edit the Keys and Values of an Object
-
-```js
-import "@johnlindquist/kit"
-
-let data = {
-  name: "John",
-  age: 42,
-  location: "USA",
-}
-
-let result = await fields(
-  Object.entries(data).map(([key, value]) => ({
-    name: key,
-    label: key,
-    value: String(value),
-  }))
-)
-
-let newData = Object.entries(data).map(([key], i) => ({
-  [key]: result[i],
-}))
-
-inspect(newData)
-```
-
-## Prompt
 
 ### Rewind Prompts
 
-```js
+```ts
+// Name: Rewind Prompts
+// Group: Prompt
+
 import { Shortcut } from "@johnlindquist/kit"
 
 let currentStep = 0
@@ -252,49 +357,85 @@ while (currentStep < steps.length) {
 }
 
 inspect(steps)
+
 ```
 
-## Audio
+### Single Keystroke Demo
 
-### Cancel Audio with Keyboard Shortcut
+```ts
+// Name: Single Keystroke Demo
+// Group: Prompt
 
-```js
 import "@johnlindquist/kit"
 
-// Start saying long thing
-say(`I have so much to say I'm just going to keep talking until someone shuts me up`)
-
-registerShortcut("opt x", () => {
-  say("") //will cancel
-  process.exit() // you need to exit or else the shortcuts will keep the script active
+let choice = await arg({
+  placeholder: "Choose a color",
+  choices: [
+    { name: "[R]ed", value: "red" },
+    { name: "[G]reen", value: "green" },
+    { name: "[B]lue", value: "blue" },
+  ],
 })
 
-registerShortcut("opt y", () => {
-  say("You're done", {
-    name: "Alice",
-    rate: 0.5,
-    pitch: 2,
-  })
-  process.exit()
-})
+await div(md(`You chose ${choice}`))
+
 ```
 
-## Desktop
+### Strict Mode
 
-### Get Active App on Mac
+```ts
+// Name: Strict Mode
+// Group: Prompt
 
-```js
-// MAC ONLY!
 import "@johnlindquist/kit"
 
-// Always hide immmediately if you're not going to show a prompt
-await hide()
+let fruit = await arg(
+  {
+    placeholder: "Select a fruit",
+    hint: "Type 'Grape' and hit enter",
+    strict: false,
+  },
+  ["Apple", "Banana", "Cherry"]
+)
 
-// Note: This uses "https://www.npmjs.com/package/@johnlindquist/mac-frontmost" inside Kit.app,
-// but you can import that package directly (or another similar package) if you prefer
-let info = await getActiveAppInfo()
-if (info.bundleIdentifier === "com.google.Chrome"){
-  await keyboard.pressKey(Key.LeftSuper, Key.T)
-  await keyboard.releaseKey(Key.LeftSuper, Key.T)
+await div(md(fruit))
+
+```
+
+## Styles
+
+### Adjust the CSS of Choices
+
+```ts
+// Name: Adjust the CSS of Choices
+// Group: Styles
+
+import "@johnlindquist/kit"
+
+let choice = await arg({
+  css: `
+.light-purple {
+  background-color: #c8a2c8;
+}  
+.medium-purple {
+  background-color: #967bb6;
 }
+.dark-purple {
+  background-color: #5d4777;
+}
+
+.focused {
+  box-shadow: inset .5rem 0 0 0 #ffffffee;
+}
+  `,
+  placeholder: "Choose a shade of purple",
+  choices: [
+    { name: "[L]ight Purple", value: "light-purple", className: "light-purple", focusedClassName: "focused" },
+    { name: "[M]edium Purple", value: "medium-purple", className: "medium-purple", focusedClassName: "focused" },
+    { name: "[D]ark Purple", value: "dark-purple", className: "dark-purple", focusedClassName: "focused" },
+  ],
+})
+
+await div(md(`You chose ${choice}`))
+
 ```
