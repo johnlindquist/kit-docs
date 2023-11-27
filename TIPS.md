@@ -157,6 +157,89 @@ if (info.bundleIdentifier === "com.google.Chrome") {
 
 ```
 
+## Editor
+
+### Preview Markdown
+
+```ts
+// Name: Preview Markdown
+// Group: Editor
+
+import "@johnlindquist/kit"
+
+let value = `
+# Hello World
+
+## Markdown Features
+
+Here are some examples of markdown features:
+
+- **Bold Text**
+- *Italic Text*
+- \`Inline Code\`
+
+1. First item in a numbered list
+2. Second item in a numbered list
+
+> Blockquote
+
+![Image Alt Text](https://example.com/image.jpg "Image Title")
+
+~~~javascript
+console.log("Code block with syntax highlighting");
+~~~
+
+Here is a table:
+
+| Header 1 | Header 2 |
+| -------- | -------- |
+| Row 1 Col 1 | Row 1 Col 2 |
+| Row 2 Col 1 | Row 2 Col 2 |
+`.trim()
+
+await editor({
+  value,
+  onInput: async input => {
+    setPreview(md(input))
+  },
+})
+
+```
+
+## kit-docs
+
+### Provide Contextual Search Information
+
+```ts
+// Name: Provide Contextual Search Information
+
+import "@johnlindquist/kit"
+
+let choices = [
+  {
+    // Always show
+    name: "Please contact support if you don't see your fruit",
+    info: true,
+  },
+  {
+    // Only show when there are no results
+    name: "No fruits match your search",
+    miss: true,
+  },
+  "apple",
+  "banana",
+  "orange",
+]
+await arg(
+  {
+    placeholder: "Select a fruit for your basket",
+    enter: "Checkout",
+  },
+  choices
+)
+
+```
+
 ## Markdown
 
 ### Generate Tips.md from Scripts
