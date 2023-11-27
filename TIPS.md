@@ -159,6 +159,31 @@ if (info.bundleIdentifier === "com.google.Chrome") {
 
 ## Editor
 
+### Append Text to Editor
+
+```ts
+// Name: Append Text to Editor
+// Group: Editor
+
+import "@johnlindquist/kit"
+
+let sentence = `This is a sentence that will be appended to the editor.`
+let words = sentence.split(" ")
+
+setInterval(() => {
+  let word = words.shift()
+  if (word) {
+    editor.append(word + " ")
+  }
+}, 100)
+
+await editor({
+  lineNumbers: "on",
+  fontFamily: "Menlo",
+})
+
+```
+
 ### Preview Markdown
 
 ```ts
@@ -521,31 +546,5 @@ let choice = await arg({
 })
 
 await div(md(`You chose ${choice}`))
-
-```
-
-## undefined
-
-### Append Text to Editor
-
-```ts
-// Name: Append Text to Editor
-
-import "@johnlindquist/kit"
-
-let sentence = `This is a sentence that will be appended to the editor.`
-let words = sentence.split(" ")
-
-setInterval(() => {
-  let word = words.shift()
-  if (word) {
-    editor.append(word + " ")
-  }
-}, 100)
-
-await editor({
-  lineNumbers: "on",
-  fontFamily: "Menlo",
-})
 
 ```

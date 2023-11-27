@@ -1,4 +1,5 @@
 // Name: Append Text to Editor
+// Group: Editor
 
 import "@johnlindquist/kit"
 
