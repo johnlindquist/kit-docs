@@ -1,7 +1,7 @@
 // Name: Generate Tips.md from Scripts
 // Group: Markdown
 
-import "@johnlindquist/kit"
+import { Script } from "@johnlindquist/kit"
 
 let scripts = await getScripts()
 
@@ -18,7 +18,9 @@ if (isKitDocsInAKenv) {
 scripts.sort((a, b) => a.group.localeCompare(b.group))
 
 // Group by group
-let groups = {}
+let groups: {
+  [key: string]: Script[]
+} = {}
 for (let script of scripts) {
   if (!groups[script.group]) groups[script.group] = []
   groups[script.group].push(script)

@@ -1,4 +1,5 @@
 // Name: Provide Contextual Search Information
+// Group: Prompt
 
 import "@johnlindquist/kit"
 

@@ -206,40 +206,6 @@ await editor({
 
 ```
 
-## kit-docs
-
-### Provide Contextual Search Information
-
-```ts
-// Name: Provide Contextual Search Information
-
-import "@johnlindquist/kit"
-
-let choices = [
-  {
-    // Always show
-    name: "Please contact support if you don't see your fruit",
-    info: true,
-  },
-  {
-    // Only show when there are no results
-    name: "No fruits match your search",
-    miss: true,
-  },
-  "apple",
-  "banana",
-  "orange",
-]
-await arg(
-  {
-    placeholder: "Select a fruit for your basket",
-    enter: "Checkout",
-  },
-  choices
-)
-
-```
-
 ## Markdown
 
 ### Generate Tips.md from Scripts
@@ -248,7 +214,7 @@ await arg(
 // Name: Generate Tips.md from Scripts
 // Group: Markdown
 
-import "@johnlindquist/kit"
+import { Script } from "@johnlindquist/kit"
 
 let scripts = await getScripts()
 
@@ -265,7 +231,9 @@ if (isKitDocsInAKenv) {
 scripts.sort((a, b) => a.group.localeCompare(b.group))
 
 // Group by group
-let groups = {}
+let groups: {
+  [key: string]: Script[]
+} = {}
 for (let script of scripts) {
   if (!groups[script.group]) groups[script.group] = []
   groups[script.group].push(script)
@@ -359,6 +327,39 @@ await div(
 - ${second}
 - ${third}
 `)
+)
+
+```
+
+### Provide Contextual Search Information
+
+```ts
+// Name: Provide Contextual Search Information
+// Group: Prompt
+
+import "@johnlindquist/kit"
+
+let choices = [
+  {
+    // Always show
+    name: "Please contact support if you don't see your fruit",
+    info: true,
+  },
+  {
+    // Only show when there are no results
+    name: "No fruits match your search",
+    miss: true,
+  },
+  "apple",
+  "banana",
+  "orange",
+]
+await arg(
+  {
+    placeholder: "Select a fruit for your basket",
+    enter: "Checkout",
+  },
+  choices
 )
 
 ```
@@ -520,5 +521,31 @@ let choice = await arg({
 })
 
 await div(md(`You chose ${choice}`))
+
+```
+
+## undefined
+
+### Append Text to Editor
+
+```ts
+// Name: Append Text to Editor
+
+import "@johnlindquist/kit"
+
+let sentence = `This is a sentence that will be appended to the editor.`
+let words = sentence.split(" ")
+
+setInterval(() => {
+  let word = words.shift()
+  if (word) {
+    editor.append(word + " ")
+  }
+}, 100)
+
+await editor({
+  lineNumbers: "on",
+  fontFamily: "Menlo",
+})
 
 ```
