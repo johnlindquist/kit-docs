@@ -288,6 +288,10 @@ Kit.app will check for updates each time your machine wakes from sleep. But if y
 
 ### Disable Automatic Update Check
 
+<!-- description: Disable automatic update checks -->
+<!-- value: cli/disable-auto-update.js -->
+<!-- enter: Disable -->
+
 Add the following to your `.env` to disable automatic update checks:
 
 
@@ -295,11 +299,11 @@ Add the following to your `.env` to disable automatic update checks:
 KIT_DISABLE_AUTO_UPDATE=true
 ```
 
-<!-- description: Disable automatic update checks -->
-<!-- value: cli/disable-auto-update.js -->
-<!-- enter: Disable -->
-
 ### Disable Telemetry
+
+<!-- description: Disable telemetry -->
+<!-- value: cli/disable-telemetry.js -->
+<!-- enter: Disable -->
 
 Kit.app reports anonymous open, error, prompt type, and quit events to help improve the app. If you'd like to disable this, add the following to your `.env`:
 
@@ -307,9 +311,6 @@ Kit.app reports anonymous open, error, prompt type, and quit events to help impr
 KIT_DISABLE_TELEMETRY=true
 ```
 
-<!-- description: Disable telemetry -->
-<!-- value: cli/disable-telemetry.js -->
-<!-- enter: Disable -->
 
 ## Select Default Display
 
