@@ -286,6 +286,31 @@ You can manually edit a `PATH` value any time in `~/.kenv/.env`
 
 Kit.app will check for updates each time your machine wakes from sleep. But if you heard about an update and just can't wait, trigger this command to grab it.
 
+### Disable Automatic Update Check
+
+Add the following to your `.env` to disable automatic update checks:
+
+
+```bash
+KIT_DISABLE_AUTO_UPDATE=true
+```
+
+<!-- description: Disable automatic update checks -->
+<!-- value: cli/disable-auto-update.js -->
+<!-- enter: Disable -->
+
+### Disable Telemetry
+
+Kit.app reports anonymous open, error, prompt type, and quit events to help improve the app. If you'd like to disable this, add the following to your `.env`:
+
+```bash
+KIT_DISABLE_TELEMETRY=true
+```
+
+<!-- description: Disable telemetry -->
+<!-- value: cli/disable-telemetry.js -->
+<!-- enter: Disable -->
+
 ## Select Default Display
 
 <!-- description: Always open Kit on a specific display -->
