@@ -78,51 +78,6 @@ The main goal of Script Kit is to build a community of people who love to script
   - Scripts and utils for app setup, managing kenvs, parsing scripts, etc
 
 - kenvs - Kit Enviroments (AKA "kenv") are directories that contain a "scripts" directory. If you point "kit" at a "kenv", kit will parse the scripts and give you tools to simplify running and managing them.
-
-      
-## View Scheduled Scripts
-
-<!-- description: View and edit upcoming jobs -->
-<!-- value: cli/schedule.js -->
-<!-- enter: Open Schedule -->
-
-Use cron syntax to run scripts on a schedule:
-
-```js
-// Schedule: */10 * * * * *
-```
-
-> Note: these scripts must not include `arg` or they will time out after 10 seconds
-
-      
-## View System Event Scripts
-
-<!-- description: View and edit system event scripts -->
-<!-- value: cli/system-events.js -->
-<!-- enter: Open System Events -->
-
-This menu shows scripts that run on system events.
-
-Add the `System` metadata to run your script on a system event
-
-```js
-// System: unlock-screen
-```
-
-Available events:
-
-- suspend
-- resume
-- on-ac
-- on-battery
-- shutdown
-- lock-screen
-- unlock-screen
-- user-did-become-active
-- user-did-resign-active
-- Read about the available events [here](https://www.electronjs.org/docs/latest/api/power-monitor#events)
-
-> Note: YMMV based on your specific machine setup.
       
 ## Terminal Tools
       
@@ -179,6 +134,53 @@ list-downloads
 <!-- enter: Create bins -->
 
 If you manually manage files in the `scripts` dir (instead of using Kit.app or the `kit` CLI) you may run into the scenarios where you have to re-generate all the `bin` executables. This will do that for you.
+
+## View Automatic Scripts
+      
+### View Scheduled Scripts
+
+<!-- description: View and edit upcoming jobs -->
+<!-- value: cli/schedule.js -->
+<!-- enter: Open Schedule -->
+
+Use cron syntax to run scripts on a schedule:
+
+```js
+// Schedule: */10 * * * * *
+```
+
+> Note: these scripts must not include `arg` or they will time out after 10 seconds
+
+      
+### View System Event Scripts
+
+<!-- description: View and edit system event scripts -->
+<!-- value: cli/system-events.js -->
+<!-- enter: Open System Events -->
+
+This menu shows scripts that run on system events.
+
+Add the `System` metadata to run your script on a system event
+
+```js
+// System: unlock-screen
+```
+
+Available events:
+
+- suspend
+- resume
+- on-ac
+- on-battery
+- shutdown
+- lock-screen
+- unlock-screen
+- user-did-become-active
+- user-did-resign-active
+- Read about the available events [here](https://www.electronjs.org/docs/latest/api/power-monitor#events)
+
+> Note: YMMV based on your specific machine setup.
+
 
 
 ## Settings
