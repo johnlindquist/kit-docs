@@ -294,7 +294,6 @@ Kit.app will check for updates each time your machine wakes from sleep. But if y
 
 Add the following to your `.env` to disable automatic update checks:
 
-
 ```bash
 KIT_DISABLE_AUTO_UPDATE=true
 ```
@@ -311,8 +310,7 @@ Kit.app reports anonymous open, error, prompt type, and quit events to help impr
 KIT_DISABLE_TELEMETRY=true
 ```
 
-
-## Select Default Display
+### Select Default Display
 
 <!-- description: Always open Kit on a specific display -->
 <!-- value: config/set-default-display.js -->
