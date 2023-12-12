@@ -1418,16 +1418,52 @@ inspect(result) // Sally
 
 ### blur
 
+Unfocus the prompt.
+
+> Note: You need to use `ignoreBlur` on some prompts or else this will exit the script
+
 ### getClipboardHistory
+
+Get the clipboard history:
+
+```js
+let history = await getClipboardHistory()
+dev(history)
+```
+
 ### clearClipboardHistory
-### getEditorHistory
+
+Clear the clipboard history:
+
+```js
+await clearClipboardHistory()
+```
+
 ### removeClipboardItem
 
+Remove a specific clipboard item:
+
+```js
+let history = await getClipboardHistory()
+let itemId = history[2].id
+await removeClipboardItem(itemId)
+```
 
 ### mainScript
+
+Return your script to the main menu:
+
+```js
+await mainScript()
+```
+
 ### appKeystroke
+
 ### Key
+
 ### log
+
+
 ### warn
 ### keyboard
 ### mouse
@@ -1447,9 +1483,53 @@ let value = await docs(kitPath("API.md"))
 
 ### getAppState
 ### registerShortcut
+
+Register a global shortcut that's only available for the duration of the script:
+
+```js
+registerShortcut("opt y", () => {
+  say("You're done", {
+    name: "Alice",
+    rate: 0.5,
+    pitch: 2
+  });
+  process.exit();
+});
+```
 ### unregisterShortcut
+
+Unregister a global shortcut that was registered with `registerShortcut`:
+
+```js
+unregisterShortcut("opt y");
+```
+
 ### startDrag
+
 ### eyeDropper
+
+Show the eye dropper to select a color from the screen:
+
+```js
+hide()
+let { sRGBHex } = await eyeDropper()
+
+let css = `
+.result {
+    font-size: 24px;
+    background-color: ${sRGBHex};
+    width: 100%;
+    height: 100%;
+}    
+`
+
+await div({
+  css,
+  className: "result",
+  html: `Color: ${sRGBHex}`,
+  height: PROMPT.HEIGHT["2XL"],
+})
+```
 
 ### toast
 
@@ -1474,10 +1554,31 @@ await div({
 ```
 
 ### mic
-### micdot
 
-### getMediaDevices
-### getTypedText
+Display the `mic` prompt to record mic audio:
+
+```js
+let buffer = await mic()
+let filePath = tmpPath(`audio-${formatDate(new Date(), "yyyy-MM-dd-HH-mm-ss")}.webm`)
+await writeFile(filePath, buffer)
+playAudioFile(filePath)
+```
+
+### mic.start and mic.stop
+
+Start and stop the mic recording in any prompt:
+
+```js
+await div({
+  html: md(`Recording for 5 seconds!`),
+  onInit: async () => {    
+    let filePath = await mic.start()
+    await wait(5000)
+    let buffer = await mic.stop()
+    await revealFile(filePath)
+  },
+})
+```
 
 ### PROMPT
 
@@ -1598,7 +1699,7 @@ const fileContent = await ensureReadFile(filePath, defaultContent);
 
 ### exec
 ```js
-const { stdout } = await execa(command, args);
+const { stdout } = await exec(command, args);
 ```
 
 ### execa
@@ -1637,72 +1738,72 @@ await download(url, outputPath);
 
 ### emptyDir
 ```js
-await fsExtra.emptyDir(directoryPath);
+await emptyDir(directoryPath);
 ```
 
 ### ensureFile
 ```js
-await fsExtra.ensureFile(filePath);
+await ensureFile(filePath);
 ```
 
 ### ensureDir
 ```js
-await fsExtra.ensureDir(directoryPath);
+await ensureDir(directoryPath);
 ```
 
 ### ensureLink
 ```js
-await fsExtra.ensureLink(srcPath, destPath);
+await ensureLink(srcPath, destPath);
 ```
 
 ### ensureSymlink
 ```js
-await fsExtra.ensureSymlink(target, path);
+await ensureSymlink(target, path);
 ```
 
 ### mkdirp
 ```js
-await fsExtra.mkdirp(directoryPath);
+await mkdirp(directoryPath);
 ```
 
 ### mkdirs
 ```js
-await fsExtra.mkdirs(directoryPath);
+await mkdirs(directoryPath);
 ```
 
 ### outputFile
 ```js
-await fsExtra.outputFile(filePath, data);
+await outputFile(filePath, data);
 ```
 
 ### outputJson
 ```js
-await fsExtra.outputJson(filePath, jsonObject);
+await outputJson(filePath, jsonObject);
 ```
 
 ### pathExists
 ```js
-const exists = await fsExtra.pathExists(path);
+const exists = await pathExists(path);
 ```
 
 ### readJson
 ```js
-const jsonObject = await fsExtra.readJson(filePath);
+const jsonObject = await readJson(filePath);
 ```
 
 ### remove
 ```js
-await fsExtra.remove(path);
+await remove(path);
 ```
 
 ### writeJson
 ```js
-await fsExtra.writeJson(filePath, jsonObject);
+await writeJson(filePath, jsonObject);
 ```
 
 ### move
 ```js
-await fsExtra.move(srcPath, destPath);
+await move(srcPath, destPath);
 ```
 
 ## FS/Promises
@@ -1931,6 +2032,6 @@ process.stdout.write(`${message}\n`);
 <!-- enter: Update Docs -->
 <!-- value: download-md.js -->
 
-These API docs are definitely incomplete and constantly evolving. If you're missing something, [suggest an edit](https://github.com/johnlindquist/kit/blob/main/API.md) to the docs or open an issue on GitHub. 
+These API docs are definitely incomplete and constantly evolving. If you're missing something, [suggest an edit](https://github.com/johnlindquist/kit-docs/blob/main/API.md) to the docs or open an issue on GitHub. 
 
 Press <kbd>Enter</kbd> to download the latest docs
