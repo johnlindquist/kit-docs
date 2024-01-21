@@ -838,7 +838,7 @@ Generates a path to a tmp directory based on the current script name:
 
 ```js
 // Run from the "my-script.ts" script
-let tmpAsset = await tmpPath("result.txt")
+let tmpAsset = tmpPath("result.txt")
 // ~/.kenv/tmp/my-script/result.txt
 ```
 
