@@ -8,14 +8,14 @@ const config: Config = {
   favicon: "img/favicon.ico",
 
   // Set the production url of your site here
-  url: "https://josxa.github.io",
+  url: "https://johnlindquist.github.io",
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: "/kit-docs/",
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: "josxa", // Usually your GitHub org/user name.
+  organizationName: "johnlindquist", // Usually your GitHub org/user name.
   projectName: "kit-docs", // Usually your repo name.
 
   deploymentBranch: "gh-pages",
