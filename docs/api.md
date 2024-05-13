@@ -1,3 +1,7 @@
+---
+sidebar_position: 3
+---
+
 # API
 
 ## Intro
@@ -254,7 +258,9 @@ The `template` prompt will present the editor populated by your template. You ca
 
 #### Details
 
-1. The first argument is a string template. Add variables using $1, $2, etc. You can also use \${1:default value} to set a default value.
+1. The first argument is a string template. Add variables using $1, $2, etc. You can also use 
+
+[//]: # (\${1:default value} to set a default value.&#41;)
 
 #### Template Hello World
 
@@ -554,7 +560,7 @@ let word = await select("Type then pick a words", input => {
 })
 ```
 
-### inpect
+### inspect
 
 
 
@@ -1060,7 +1066,7 @@ inspect(until) // "about 2 months"
 ```
 
 ### createChoiceSearch
-(choices: Choice[], config: Partial<Options & ConfigOptions>) => Promise<(query: string) => ScoredChoice[]>
+`(choices: Choice[], config: Partial<Options & ConfigOptions>) => Promise<(query: string) => ScoredChoice[]>`
 
 
 ### groupChoices
@@ -1095,10 +1101,10 @@ An internal function used to preload the choices for the next script. This is on
 An internal function that marks the script as "done" and ready for cleanup by the app.
 
 ### formatChoices
-(choices: Choice[], className?: string) => Choice[]
+`(choices: Choice[], className?: string) => Choice[]`
 
 ### setScoredChoices
-(scoredChoices: ScoredChoice[]) => Promise<void>
+`(scoredChoices: ScoredChoice[]) => Promise<void>`
 
 ### setSelectedChoices
 
