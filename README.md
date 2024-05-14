@@ -1,6 +1,8 @@
 <a name="top"></a>
 # Script Kit Docs
 
+https://johnlindquist.github.io/kit-docs/
+
 Welcome to the kit-docs repository! 
 This repo hosts the documentation for [Script Kit](https://scriptkit.com/), an intuitive scripting toolkit 
 designed to make scripting accessible and fun for developers of all skill levels.
