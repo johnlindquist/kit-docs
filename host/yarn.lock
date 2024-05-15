@@ -7034,6 +7034,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"host@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "host@workspace:."
+  dependencies:
+    "@docusaurus/core": "npm:3.2.1"
+    "@docusaurus/module-type-aliases": "npm:3.2.1"
+    "@docusaurus/preset-classic": "npm:3.2.1"
+    "@docusaurus/tsconfig": "npm:3.2.1"
+    "@docusaurus/types": "npm:3.2.1"
+    "@easyops-cn/docusaurus-search-local": "npm:^0.40.1"
+    "@mdx-js/react": "npm:^3.0.0"
+    clsx: "npm:^2.0.0"
+    cross-env: "npm:^7.0.3"
+    prettier: "npm:^3.2.5"
+    prism-react-renderer: "npm:^2.3.0"
+    react: "npm:^18.0.0"
+    react-dom: "npm:^18.0.0"
+    typescript: "npm:~5.2.2"
+  languageName: unknown
+  linkType: soft
+
 "hpack.js@npm:^2.1.6":
   version: 2.1.6
   resolution: "hpack.js@npm:2.1.6"
@@ -7922,27 +7943,6 @@ __metadata:
   checksum: 10c0/61cdff9623dabf3568b6445e93e31376bee1cdb93f8ba7033d86022c2a9b1791a1d9510e026e6465ebd701a6dd2f7b0808483ad8838341ac52f003f512e0b4c4
   languageName: node
   linkType: hard
-
-"kit-crocs@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "kit-crocs@workspace:."
-  dependencies:
-    "@docusaurus/core": "npm:3.2.1"
-    "@docusaurus/module-type-aliases": "npm:3.2.1"
-    "@docusaurus/preset-classic": "npm:3.2.1"
-    "@docusaurus/tsconfig": "npm:3.2.1"
-    "@docusaurus/types": "npm:3.2.1"
-    "@easyops-cn/docusaurus-search-local": "npm:^0.40.1"
-    "@mdx-js/react": "npm:^3.0.0"
-    clsx: "npm:^2.0.0"
-    cross-env: "npm:^7.0.3"
-    prettier: "npm:^3.2.5"
-    prism-react-renderer: "npm:^2.3.0"
-    react: "npm:^18.0.0"
-    react-dom: "npm:^18.0.0"
-    typescript: "npm:~5.2.2"
-  languageName: unknown
-  linkType: soft
 
 "klaw-sync@npm:^6.0.0":
   version: 6.0.0
