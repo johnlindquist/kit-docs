@@ -1,10 +1,12 @@
 ---
-# Slash as slug makes this the home page
-slug: /
-sidebar_position: 1
+sidebar_position: 6
 ---
 
-# Script Kit
+# Settings
+
+> **Important**\
+> This page is **not** meant to be viewed on the website. See it in the app under "`Kit Settings`" instead!\
+> It's left here as a reference for those willing to contribute changes.
 
 ### Pro Tutorials
 

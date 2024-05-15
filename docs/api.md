@@ -1,5 +1,7 @@
 ---
-sidebar_position: 3
+# Slash as slug makes this the home page
+slug: /
+sidebar_position: 1
 ---
 
 # API
