@@ -2,6 +2,8 @@ import { themes as prismThemes } from "prism-react-renderer";
 import type { Config } from "@docusaurus/types";
 import type * as Preset from "@docusaurus/preset-classic";
 
+const DOCS_DIR = "../docs" as const;
+
 const config: Config = {
   title: "Script Kit Docs",
   tagline: "Automate Anything.",
@@ -40,6 +42,8 @@ const config: Config = {
       {
         // `hashed` is recommended as long-term-cache of index file is possible.
         hashed: true,
+        docsDir: DOCS_DIR,
+        docsRouteBasePath: "/",
       },
     ],
   ],
@@ -51,7 +55,7 @@ const config: Config = {
           sidebarPath: "./sidebars.ts",
           editUrl:
             "https://github.com/johnlindquist/kit-docs/tree/main/host/docusaurus.config.ts",
-          path: "../docs",
+          path: DOCS_DIR,
           routeBasePath: "/",
         },
         theme: {
