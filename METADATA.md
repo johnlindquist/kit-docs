@@ -1,4 +1,6 @@
 ---
+slug: metadata
+title: "Metadata"
 sidebar_position: 5
 ---
 
