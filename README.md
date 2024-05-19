@@ -15,10 +15,13 @@ designed to make scripting accessible and fun for developers of all skill levels
 
 ## Repository Structure
 
-This repository is organized into two key directories:
-
-- `/docs` - Contains the Markdown files for all the documentation. If you're looking to contribute or edit the docs, this is where you'll find the files.
+- `/` - The repository root contains the Markdown files for all the documentation. If you're looking to contribute or edit 
+  the docs, this is where you'll find the files. Due to backwards compatibility with already released Kit versions, we cannot 
+  create a dedicated `/docs` folder (see hardcoded file names in [download-md.ts](https://github.com/johnlindquist/kit/blob/main/src/cli/download-md.ts))
 - `/host` - This directory houses the [Docusaurus](https://docusaurus.io/) setup used to generate the documentation site. Docusaurus is a modern static website generator.
+
+Some markdown files at the repo root, such as this `README.md`, are ignored. See the `exclude` declaration in 
+[host/docusaurus.config.mts](https://github.com/johnlindquist/kit-docs/blob/main/host/docusaurus.config.ts) for details.
 
 ## Installation
 

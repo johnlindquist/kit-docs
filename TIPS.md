@@ -1,3 +1,9 @@
+---
+slug: /tips
+title: "Tips"
+sidebar_position: 3
+---
+
 # Tips
 
 Tips are a collection of answers to user questions in GitHub Discussions and our Discord organized by topic.

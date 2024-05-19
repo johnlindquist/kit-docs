@@ -1,4 +1,11 @@
-# Script Kit Guide
+---
+slug: guide
+title: "Guide"
+sidebar_position: 2
+---
+
+
+# Guide
 
 
 ## Run

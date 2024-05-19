@@ -1,8 +1,9 @@
 import { themes as prismThemes } from "prism-react-renderer";
 import type { Config } from "@docusaurus/types";
 import type * as Preset from "@docusaurus/preset-classic";
+import path from "node:path";
 
-const DOCS_DIR = "../docs" as const;
+const DOCS_DIR = "../" as const;
 
 const config: Config = {
   title: "Script Kit Docs",
@@ -57,6 +58,8 @@ const config: Config = {
             "https://github.com/johnlindquist/kit-docs/tree/main/host/docusaurus.config.ts",
           path: DOCS_DIR,
           routeBasePath: "/",
+          include: ["*.md", "*.mdx"], // Do not recursively traverse from repo root
+          exclude: ["SPONSOR.md", "README.md", "CODE_OF_CONDUCT.md"],
         },
         theme: {
           customCss: "./src/css/custom.css",

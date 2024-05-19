@@ -1,4 +1,14 @@
-## Script Kit
+---
+slug: kit-settings
+title: "Kit Settings"
+sidebar_position: 6
+---
+
+# Settings
+
+> **Important**\
+> This page is **not** meant to be viewed on the website. See it in the app under "`Kit Settings`" instead!\
+> It's left here as a reference for those willing to contribute changes.
 
 ### Pro Tutorials
 
@@ -6,15 +16,14 @@
 <!-- value: cli/tutorials.js -->
 <!-- enter: Open scriptkit.com -->
 
-<div class="flex flex-row w-full items-start">
+<div class="flex flex-row w-full items-start"></div>
 <div class="flex-1">
 <p>Visit <a href="https://scriptkit.com/tutorials">https://scriptkit.com/tutorials</a> to view the
 official Script Kit tutorials created by John Lindquist.</p>
 
 <p>These lessons will take your scripting skills to the next level. Unlocking countless possibilities with scripts, AI, and more! 🚀</p>
 </div>
-<img class="my-0 p-0 object-contain w-1/3" src="https://www.scriptkit.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fbadass-courses%2Fimage%2Fupload%2Fv1683624377%2Fplaceholder-tutorial-illustration-sk_2x_thb8g3.png&w=256&q=100">
-<div>
+<img class="my-0 p-0 object-contain w-1/3" src="https://www.scriptkit.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fbadass-courses%2Fimage%2Fupload%2Fv1683624377%2Fplaceholder-tutorial-illustration-sk_2x_thb8g3.png&w=256&q=100" />
 
 ### Find Help on Github Discussions
 
@@ -33,7 +42,7 @@ This is the place to:
 Or just hit _Enter_ to browse all.
 
 > We'll do our best to respond ASAP!
-      
+
 ### Subscribe to the Newsletter
 
 <!-- description: Receive a newsletter with examples and tips -->
@@ -53,7 +62,7 @@ Or just hit _Enter_ to browse all.
 <!-- enter: Sign-in -->
 
 Sign-in to share scripts with others.
-      
+
 ## FAQ
 
 ### What is Script Kit?
@@ -78,9 +87,9 @@ The main goal of Script Kit is to build a community of people who love to script
   - Scripts and utils for app setup, managing kenvs, parsing scripts, etc
 
 - kenvs - Kit Enviroments (AKA "kenv") are directories that contain a "scripts" directory. If you point "kit" at a "kenv", kit will parse the scripts and give you tools to simplify running and managing them.
-      
+
 ## Terminal Tools
-      
+
 ### Add ~/.kit/bin to $PATH
 
 <!-- description: Select profile and append ~/.kit/bin to $PATH -->
@@ -104,7 +113,7 @@ kit
 > If you're familiar with adding to your `.zshrc`, just add `~/.kit/bin` to your PATH.
 
 The `kit` CLI will allow you to run, edit, etc scripts from your terminal.
-      
+
 ### Add kenv Executables to $PATH
 
 <!-- description: Select profile and append ~/.kenv/bin to $PATH -->
@@ -136,7 +145,7 @@ list-downloads
 If you manually manage files in the `scripts` dir (instead of using Kit.app or the `kit` CLI) you may run into the scenarios where you have to re-generate all the `bin` executables. This will do that for you.
 
 ## View Automatic Scripts
-      
+
 ### View Scheduled Scripts
 
 <!-- description: View and edit upcoming jobs -->
@@ -151,7 +160,7 @@ Use cron syntax to run scripts on a schedule:
 
 > Note: these scripts must not include `arg` or they will time out after 10 seconds
 
-      
+
 ### View System Event Scripts
 
 <!-- description: View and edit system event scripts -->
@@ -193,7 +202,7 @@ Select from a variety of themes. Mostly a work in progress. We'll support commun
 <!-- value: pro/theme-selector.js -->
 <!-- enter: Open Theme Selector -->
 
-      
+
 ### Change Script Kit Shortcut
 
 <!-- description: Change the shortcut to open Script Kit -->
@@ -201,7 +210,7 @@ Select from a variety of themes. Mostly a work in progress. We'll support commun
 <!-- enter: Change -->
 
 Don't like `cmd+;`? Change it here!
-      
+
 ### Add/Change a Script Shortcut
 
 <!-- description: List scripts with shortcuts, then prompt to change -->
@@ -217,8 +226,8 @@ You can manually add shortcuts to scripts like so:
 ```
 
 This menu will manage that for you
-      
-     
+
+
 ### Change Editor
 
 <!-- description: Change the editor used to open scripts -->
@@ -236,7 +245,7 @@ KIT_EDITOR=code
 ```
 
 If `code` isn't on your PATH, you can add the full path to the editor.
-     
+
 ### Clear Kit Prompt Cache
 
 <!-- description: Clear the positions and sizes of script prompts -->
@@ -249,7 +258,7 @@ Each time you move or resize the prompt around for your scripts, Script Kit will
 ```js
 let express = await npm("express")
 ```
-      
+
 ### Switch to JavaScript Mode
 
 <!-- description: Set .env KIT_MODE=js -->
@@ -265,7 +274,7 @@ Prefer JavaScript for your scripts? Hit _Enter_!
 <!-- enter: Switch to TS -->
 
 Prefer TypeScript for your scripts? Hit _Enter_!
-      
+
 ### Sync $PATH from Terminal to Kit.app
 
 <!-- description: Set .env PATH to the terminal $PATH -->
@@ -277,7 +286,7 @@ Have a command that's working in your terminal, but doesn't work when you call i
 Use this to sync up your "PATH" from your terminal to the "PATH" that Script Kit will use.
 
 You can manually edit a `PATH` value any time in `~/.kenv/.env`
-      
+
 ### Check for Update
 
 <!-- description: Check for an update to Kit.app -->
@@ -336,7 +345,7 @@ This will open the `kit.log` file in your editor. This is where Script Kit logs 
 <!-- enter: Edit .env -->
 
 This will open the `.env` file in your editor. This is where Script Kit stores environment variables for your scripts.
-      
+
 ## Credits
 
 ### John Lindquist
@@ -374,3 +383,4 @@ Design
 <!-- enter: Quit -->
 
 See you soon! 👋
+
