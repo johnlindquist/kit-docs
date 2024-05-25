@@ -1396,7 +1396,7 @@ interface UiohookKeyboardEvent {
 
 ### hide
 
-Hide the prompt when you're script doesn't need a prompt and will simply run a command and open another app.
+Hide the prompt when your script doesn't need a prompt and will simply run a command and open another app.
 
 ```js
 await hide()
