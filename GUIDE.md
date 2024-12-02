@@ -315,38 +315,39 @@ await div(html)
 
 <!-- value: https://github.com/johnlindquist/kit-docs/blob/main/GUIDE.md -->
 
-To add an options menu to your choices, you must provide a `flags` object. If one of the keyboard shortcuts are hit, or the user selects the option, then the `flag` global will have the matching key from your flags set to `true`:
+To add an options menu to your choices, pass an array of actions as the third argument. In the `onAction` handler, you can add whatever conditions/actions you want to take:
 
 ```js
+import "@johnlindquist/kit";
+
 let urls = [
   "https://scriptkit.com",
   "https://egghead.io",
   "https://johnlindquist.com",
-]
+];
 
-let flags = {
-  open: {
+let url = await arg(`Press 'right' to see menu`, urls, [
+  {
     name: "Open",
-    shortcut: "cmd+o",
+    shortcut: `${cmd}+o`,
+    onAction: async (input, state) => {
+      await open(state.focused.value);
+      exit(); // Remove if you want to keep the menu open
+    },
   },
-  copy: {
+  {
     name: "Copy",
-    shortcut: "cmd+c",
+    shortcut: `${cmd}+c`,
+    onAction: async (input, state) => {
+      await copy(state.focused.value);
+      await notify(`Copied ${state.focused.value}`);
+      exit();
+    },
   },
-}
+]);
 
-let url = await arg(
-  { placeholder: `Press 'right' to see menu`, flags },
-  urls
-)
-
-if (flag?.open) {
-  $`open ${url}`
-} else if (flag?.copy) {
-  copy(url)
-} else {
-  console.log(url)
-}
+// Some default behavior
+await editor(url);
 ```
 
 Using the same script above, In the terminal, you would pass an open flag like so:
