@@ -78,7 +78,7 @@ const config: Config = {
       title: "Script Kit",
       logo: {
         alt: "Script Kit Logo",
-        src: "img/logo.png",
+        src: "img/logo-v2.png",
       },
       items: [
         {
