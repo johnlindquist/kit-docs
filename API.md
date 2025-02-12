@@ -639,12 +639,14 @@ Set the system menu to a custom message/emoji with a list of scripts to run.
 #### menu example
 
 ```ts
+// Set the menu to a custom message/emoji with a list of scripts to run
 await menu(`👍`, ["my-script", "another-script"])
 ```
 
-Reset the menu to the default icon and scripts by passing an empty string
+#### menu reset example
 
 ```ts
+// Reset the menu to the default icon and scripts by passing an empty string
 await menu(``)
 ```
 
