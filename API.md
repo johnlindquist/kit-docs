@@ -419,15 +419,15 @@ await chat({
   },
 })
 
-```ts
+```
 
 Also see the included "chatgpt" example for a much more advanced scenario.
 
 ### selectFile
 
-
-
 Prompt the user to select a file using the Finder dialog:
+
+#### selectFile example
 
 ```ts
 let filePath = await selectFile()
@@ -534,9 +534,9 @@ let word = await select("Type then pick a words", input => {
 
 ### inspect
 
-
-
 `inspect` takes an object and writes out a text file you can use to read/copy/paste the values from:
+
+#### inspect example
 
 ```ts
 let response = await get("https://swapi.dev/api/people/1/")
