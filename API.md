@@ -780,16 +780,6 @@ let result = await div({
 
 ## Pro APIs
 
-### menubar
-
-Sets a custom menu bar item with scripts.
-
-#### menubar example
-
-```ts
-await menubar(`👍`, ["my-script", "another-script"])
-```
-
 ### term
 
 Opens a built-in Terminal window.
@@ -1545,6 +1535,8 @@ let name = await micro("Enter your name")
 
 Retrieves available media devices.
 
+#### getMediaDevices example
+
 ```ts
 let devices = await getMediaDevices()
 ```
@@ -1552,6 +1544,8 @@ let devices = await getMediaDevices()
 ### getTypedText
 
 Retrieves typed text from the user.
+
+#### getTypedText example
 
 ```ts
 let text = await getTypedText()
@@ -1562,6 +1556,7 @@ let text = await getTypedText()
 Displays a small pop-up notification inside the Script Kit window.
 
 #### toast example
+
 ```ts
 await toast("Hello from Script Kit!", {
   autoClose: 3000, // close after 3 seconds
