@@ -37,7 +37,7 @@ With any example open, press `cmd+p` to generate a script where you can experime
 1. The first argument is a string or a prompt configuration object.
 2. The second argument is a list of choices, a string to render, or a function that returns choices or a string to render.
 
-#### arg hello world
+#### arg example
 
 ```ts
 let value = await arg()
@@ -150,7 +150,7 @@ let OUTPUT_DIR = await env("OUTPUT_DIR", async () => {
 The `editor` function opens a text editor with the given text. The editor is a full-featured "Monaco" editor with syntax highlighting, find/replace, and more. The editor is a great way to edit or update text to write a file. The default language is markdown.
 
 
-#### editor hello world
+#### editor example
 
 ```ts
 let content = await editor()
@@ -179,7 +179,7 @@ let content = await editor(response.data)
 2. Optional:The second argument is a string of tailwind class to apply to the container, e.g., `bg-white p-4`.
 
 
-#### div hello world
+#### div example
 
 ```ts
 await div(`Hello world!`)
@@ -189,7 +189,7 @@ await div(`Hello world!`)
 
 ```ts
 await div(md(`
-# Hello world!
+# example!
 
 ### Thanks for coming to my demo
 * This is a list
@@ -224,7 +224,7 @@ The `term` function opens a terminal window. The terminal is a full-featured ter
 
 1. Optional: the first argument is a command to run with the terminal
 
-#### term hello world
+#### term example
 
 ```ts
 await term()
@@ -244,7 +244,7 @@ The `template` prompt will present the editor populated by your template. You ca
 
 [//]: # (\${1:default value} to set a default value.&#41;)
 
-#### template hello world
+#### template example
 
 ```ts
 let text = await template(`Hello $1!`)
@@ -287,7 +287,7 @@ This can be useful when you want to use a palette of commands and trigger each o
 1. Optional: The first argument is a string to display in the prompt.
 
 
-#### hotkey hello world
+#### hotkey example
 
 ```ts
 let keyInfo = await hotkey()
@@ -298,7 +298,7 @@ await editor(JSON.stringify(keyInfo, null, 2))
 
 Use `await drop()` to prompt the user to drop a file or folder.
 
-#### drop hello world
+#### drop example
 
 ```ts
 // Note: Dropping one or more files returns an array of file information
@@ -318,7 +318,7 @@ The `fields` prompt allows you to rapidly create a form with fields.
 
 1. An array of labels or objects with label and field properties.
 
-#### fields hello world
+#### fields example
 
 ```ts
 let [first, last] = await fields(["First name", "Last name"])
@@ -450,7 +450,7 @@ The `path` prompt allows you to select a file or folder from the file system. Yo
 1. Optional: The first argument is the initial directory to open with. Defaults to the home directory.
 
 
-#### path hello world
+#### path example
 
 ```ts
 let selectedFile = await path()
@@ -552,7 +552,7 @@ await inspect(response.data)
 
 1. Optional: the first argument is an object to set to the variable `x` to in the console.
 
-#### dev hello world
+#### dev example
 
 ```ts
 dev()
@@ -566,7 +566,6 @@ dev({
     age: 40
 })
 ```
-
 
 ### find
 
@@ -673,7 +672,7 @@ Templating and interactivity can be added via [petite-vue](https://github.com/vu
 1. The first argument is a string of HTML to render in the window.
 2. Optional: the second argument is ["Browser Window Options"](https://www.electronjs.org/docs/latest/api/browser-window#new-browserwindowoptions)
 
-### widget Hello World
+### widget example
 
 ```ts
 await widget(`<h1 class="p-4 text-4xl">Hello World!</h1>`)
@@ -761,7 +760,6 @@ inspect(result.all)
 ```
 
 
-
 #### exec with prompt info
 
 ```ts
@@ -784,26 +782,9 @@ let result = await div({
 
 ### widget
 
-**Description**
 Creates a persistent UI window with HTML content.
 
-**Signature**
-
-```ts
-widget(html: string, options?: {
-  width?: number,
-  height?: number,
-  x?: number,
-  y?: number,
-  transparent?: boolean,
-  draggable?: boolean,
-  hasShadow?: boolean,
-  alwaysOnTop?: boolean,
-  ...
-}): Promise<Widget>
-```
-
-**Usage**
+#### widget example
 
 ```ts
 let clock = await widget(`<h1 class="text-7xl p-5 whitespace-nowrap">{{date}}</h1>`, {
@@ -820,368 +801,186 @@ setInterval(() => {
 }, 1000)
 ```
 
-**Returns**
-- A `Widget` instance with methods for updating state, handling events, etc.
-
-**Notes**
-- Requires a Pro subscription
-- Can be styled with Tailwind CSS
-- Interactivity can be added with petite-vue
-
 ### menubar
 
-**Description**
 Sets a custom menu bar item with scripts.
 
-**Signature**
-
-```ts
-menubar(icon: string, scripts: string[]): Promise<void>
-```
-
-**Usage**
+#### menubar example
 
 ```ts
 await menubar(`👍`, ["my-script", "another-script"])
 ```
 
-**Returns**
-- A promise that resolves when the menu bar is set
-
-**Notes**
-- Requires a Pro subscription
-- The icon can be an emoji or a base64-encoded image
-- Scripts should be in the user's `~/.kenv/scripts` directory
-
 ### term
 
-**Description**
 Opens a built-in Terminal window.
 
-**Signature**
-
-```ts
-term(command?: string, options?: {
-  cwd?: string,
-  shell?: string,
-  ...
-}): Promise<void>
-```
-
-**Usage**
+#### term example
 
 ```ts
 await term(`cd ~/.kenv/scripts && ls`)
 ```
 
-**Returns**
-- A promise that resolves when the terminal window is closed
-
-**Notes**
-- Requires a Pro subscription
 - Can run interactive commands
 - Supports custom working directory and shell
 
 ### showLogWindow
 
-**Description**
 Opens a logs window to display script output.
 
-**Signature**
-
-```ts
-showLogWindow(): Promise<void>
-```
-
-**Usage**
+#### showLogWindow example
 
 ```ts
 await showLogWindow()
 ```
 
-**Returns**
-- A promise that resolves when the logs window is opened
-
-**Notes**
-- Requires a Pro subscription
 - Displays output from all scripts run in the current session
 
 ## Platform APIs
 
 ### scatterWindows
 
-**Description**
 Evenly spaces out all open windows across the screen in a neat grid.
 
-**Signature**
-
-```ts
-async function scatterWindows(): Promise<string>
-```
-
-**Usage**
+#### scatterWindows example
 
 ```ts
 // Script to auto-arrange windows with a single command
 await scatterWindows()
 ```
 
-**Returns**
-- A string containing a status or log message, e.g. "Windows scattered."
-
-**Notes**
 - Only tested on macOS.  
 - May require accessibility permissions if it's moving windows across multiple monitors.
-```
 
 ### focusKitWindow
 
-**Description**
 Brings the Script Kit window into focus.
 
-**Signature**
-
-```ts
-async function focusKitWindow(): Promise<void>
-```
-
-**Usage**
+#### focusKitWindow example
 
 ```ts
 await focusKitWindow()
 ```
 
-**Returns**
-- A promise that resolves when the Script Kit window is focused
-
-**Notes**
 - Only tested on macOS.  
 - May require accessibility permissions.
-```
+
 
 ### attemptScriptFocus
 
-**Description**
 Attempts to bring the Script Kit window into focus.
 
-**Signature**
-
-```ts
-async function attemptScriptFocus(): Promise<void>
-```
-
-**Usage**
+#### attemptScriptFocus example
 
 ```ts
 await attemptScriptFocus()
 ```
 
-**Returns**
-- A promise that resolves when the Script Kit window is focused or if it's already in focus
-
-**Notes**
 - Only tested on macOS.  
 - May require accessibility permissions.
-```
+
 
 ### getKitWindows
 
-**Description**
 Retrieves the Script Kit window objects.
 
-**Signature**
-
-```ts
-async function getKitWindows(): Promise<Electron.BrowserWindow[]>
-```
-
-**Usage**
+#### getKitWindows example
 
 ```ts
 let windows = await getKitWindows()
 ```
 
-**Returns**
-- An array of Electron BrowserWindow objects representing the Script Kit windows
-
-**Notes**
 - Only tested on macOS.  
 - May require accessibility permissions.
-```
 
 ### focusWindow
 
-**Description**
 Brings a specific window into focus.
 
-**Signature**
-
-```ts
-async function focusWindow(windowId: number): Promise<void>
-```
-
-**Usage**
+#### focusWindow example
 
 ```ts
 await focusWindow(12345)
 ```
 
-**Returns**
-- A promise that resolves when the specified window is focused
-
-**Notes**
 - Only tested on macOS.  
 - May require accessibility permissions.
-```
+
 
 ### focusAppWindow
 
-**Description**
 Brings a specific application window into focus.
 
-**Signature**
-
-```ts
-async function focusAppWindow(appName: string, windowTitle: string): Promise<void>
-```
-
-**Usage**
+#### focusAppWindow example
 
 ```ts
 await focusAppWindow("Google Chrome", "Script Kit - Google Chrome")
 ```
 
-**Returns**
-- A promise that resolves when the specified application window is focused
-
-**Notes**
 - Only tested on macOS.  
 - May require accessibility permissions.
-```
 
 ### setWindowPosition
 
-**Description**
 Sets the position of a specific window.
 
-**Signature**
-
-```ts
-async function setWindowPosition(windowId: number, x: number, y: number): Promise<void>
-```
-
-**Usage**
+#### setWindowPosition example
 
 ```ts
 await setWindowPosition(12345, 100, 200)
 ```
 
-**Returns**
-- A promise that resolves when the window position is set
-
-**Notes**
 - Only tested on macOS.  
 - May require accessibility permissions.
-```
 
 ### setWindowPositionByIndex
 
-**Description**
 Sets the position of a window based on its index.
 
-**Signature**
-
-```ts
-async function setWindowPositionByIndex(index: number, x: number, y: number): Promise<void>
-```
-
-**Usage**
+#### setWindowPositionByIndex example
 
 ```ts
 await setWindowPositionByIndex(0, 100, 200)
 ```
 
-**Returns**
-- A promise that resolves when the window position is set
-
-**Notes**
 - Only tested on macOS.  
 - May require accessibility permissions.
-```
+
 
 ### scatterWindows
 
-**Description**
 Evenly spaces out all open windows across the screen in a neat grid.
 
-**Signature**
-
+#### scatterWindows example
 ```ts
-async function scatterWindows(): Promise<string>
-```
-
-**Usage**
-
-```ts
-// Script to auto-arrange windows with a single command
 await scatterWindows()
 ```
 
-**Returns**
-- A string containing a status or log message, e.g. "Windows scattered."
-
-**Notes**
 - Only tested on macOS.  
 - May require accessibility permissions if it's moving windows across multiple monitors.
-```
 
 ### organizeWindows
 
-**Description**
 Organizes windows in a specific way.
 
-**Signature**
+#### organizeWindows example
 
 ```ts
-async function organizeWindows(options: {
+await organizeWindows({
   direction?: "horizontal" | "vertical",
   padding?: number,
   ...
 }): Promise<string>
 ```
 
-**Usage**
-
-```ts
-await organizeWindows({
-  direction: "horizontal",
-  padding: 10
-})
-```
-
-**Returns**
-- A string containing a status or log message, e.g. "Windows organized."
-
-**Notes**
 - Only tested on macOS.  
 - May require accessibility permissions.
 
 ### tileWindow
 
-**Description**
 Tiles a specific window.
 
-**Signature**
-
-```ts
-async function tileWindow(windowId: number, options: {
-  direction?: "horizontal" | "vertical",
-  padding?: number,
-  ...
-}): Promise<void>
-```
-
-**Usage**
+#### tileWindow example
 
 ```ts
 await tileWindow(12345, {
@@ -1190,108 +989,57 @@ await tileWindow(12345, {
 })
 ```
 
-**Returns**
-- A promise that resolves when the window is tiled
-
-**Notes**
 - Only tested on macOS.  
 - May require accessibility permissions.
 
 ### scrapeSelector
 
-**Description**
 Scrapes a webpage using a CSS selector.
 
-**Signature**
-
-```ts
-async function scrapeSelector(url: string, selector: string): Promise<string>
-```
-
-**Usage**
+#### scrapeSelector example
 
 ```ts
 let text = await scrapeSelector("https://example.com", "#main-content")
 ```
 
-**Returns**
-- A string containing the scraped content
-
-**Notes**
 - Requires a Pro subscription
 - May require additional permissions or configurations
 
 ### scrapeAttribute
 
-**Description**
 Scrapes a webpage and extracts an attribute value.
 
-**Signature**
-
-```ts
-async function scrapeAttribute(url: string, selector: string, attribute: string): Promise<string>
-```
-
-**Usage**
+#### scrapeAttribute example
 
 ```ts
 let src = await scrapeAttribute("https://example.com", "img", "src")
 ```
 
-**Returns**
-- A string containing the attribute value
-
-**Notes**
 - Requires a Pro subscription
 - May require additional permissions or configurations
 
 ### getScreenshotFromWebpage
 
-**Description**
 Captures a screenshot of a webpage.
 
-**Signature**
+#### getScreenshotFromWebpage example
 
 ```ts
-async function getScreenshotFromWebpage(url: string, options?: {
+let buffer = await getScreenshotFromWebpage("https://example.com", {
   width?: number,
   height?: number,
   ...
 }): Promise<Buffer>
 ```
 
-**Usage**
-
-```ts
-let buffer = await getScreenshotFromWebpage("https://example.com", {
-  width: 800,
-  height: 600
-})
-```
-
-**Returns**
-- A Buffer containing the screenshot image data
-
-**Notes**
 - Requires a Pro subscription
 - May require additional permissions or configurations
 
 ### getWebpageAsPdf
 
-**Description**
 Converts a webpage to a PDF.
 
-**Signature**
-
-```ts
-async function getWebpageAsPdf(url: string, options?: {
-  width?: number,
-  height?: number,
-  ...
-}): Promise<Buffer>
-```
-
-**Usage**
+#### getWebpageAsPdf example
 
 ```ts
 let buffer = await getWebpageAsPdf("https://example.com", {
@@ -1300,143 +1048,122 @@ let buffer = await getWebpageAsPdf("https://example.com", {
 })
 ```
 
-**Returns**
-- A Buffer containing the PDF data
-
-**Notes**
 - Requires a Pro subscription
 - May require additional permissions or configurations
 
-### appleScript
+### applescript
 
-**Description**
-Executes an AppleScript.
+Executes an applescript string
 
-**Signature**
-
-```ts
-async function appleScript(script: string): Promise<string>
-```
-
-**Usage**
+#### applescript example
 
 ```ts
-let result = await appleScript(`
+let result = await applescript(`
 tell application "Finder"
   return name of every disk
 end tell
 `)
 ```
 
-**Returns**
-- A string containing the result of the AppleScript execution
-
-**Notes**
 - Only tested on macOS
 - May require additional permissions or configurations
 
 ### lock
 
-**Description**
 Locks the screen.
 
-**Signature**
-
-```ts
-async function lock(): Promise<void>
-```
-
-**Usage**
+#### lock example
 
 ```ts
 await lock()
 ```
 
-**Returns**
-- A promise that resolves when the screen is locked
-
-**Notes**
 - Only tested on macOS
 - May require additional permissions or configurations
 
 ### logout
 
-**Description**
 Logs out the current user.
 
-**Signature**
-
-```ts
-async function logout(): Promise<void>
-```
-
-**Usage**
+#### logout example
 
 ```ts
 await logout()
 ```
 
-**Returns**
-- A promise that resolves when the user is logged out
-
-**Notes**
 - Only tested on macOS
-- May require additional permissions or configurations
+- May require additional permissions or configurations  
 
 ### shutdown
 
-**Description**
 Shuts down the computer.
 
-**Signature**
-
-```ts
-async function shutdown(): Promise<void>
-```
-
-**Usage**
+#### shutdown example
 
 ```ts
 await shutdown()
 ```
 
-**Returns**
-- A promise that resolves when the computer is shut down
+- Only tested on macOS
+- May require additional permissions or configurations
 
-**Notes**
+### shutdown
+
+Shuts down the computer.
+
+#### shutdown example
+
+```ts
+await shutdown()
+```
+
 - Only tested on macOS
 - May require additional permissions or configurations
 
 ### sleep
 
-**Description**
 Puts the computer to sleep.
 
-**Signature**
-
-```ts
-async function sleep(): Promise<void>
-```
-
-**Usage**
+#### sleep example
 
 ```ts
 await sleep()
 ```
 
-**Returns**
-- A promise that resolves when the computer is put to sleep
+  - Only tested on macOS
+- May require additional permissions or configurations
 
-**Notes**
+### sleep
+
+Puts the computer to sleep.
+
+#### sleep example
+
+```ts
+await sleep()
+```
+
+- Only tested on macOS
+- May require additional permissions or configurations
+
+### sleep
+
+Puts the computer to sleep.
+
+#### sleep example
+
+```ts
+await sleep()
+```
+
 - Only tested on macOS
 - May require additional permissions or configurations
 
 ### fileSearch
 
-**Description**
 Searches for files on the filesystem.
 
-**Signature**
+#### fileSearch example
 
 ```ts
 async function fileSearch(query: string, options?: {
@@ -1445,7 +1172,14 @@ async function fileSearch(query: string, options?: {
 }): Promise<string[]>
 ```
 
-**Usage**
+- Only tested on macOS
+- May require additional permissions or configurations
+
+### copyPathAsImage
+
+Copies a file path as an image to the clipboard.
+
+#### copyPathAsImage example
 
 ```ts
 let results = await fileSearch("*.md", {
@@ -1453,82 +1187,58 @@ let results = await fileSearch("*.md", {
 })
 ```
 
-**Returns**
-- An array of file paths matching the search query
-
-**Notes**
 - Only tested on macOS
 - May require additional permissions or configurations
 
 ### copyPathAsImage
 
-**Description**
 Copies a file path as an image to the clipboard.
 
-**Signature**
-
-```ts
-async function copyPathAsImage(path: string): Promise<void>
-```
-
-**Usage**
+#### copyPathAsImage example
 
 ```ts
 await copyPathAsImage("/path/to/file.txt")
 ```
 
-**Returns**
-- A promise that resolves when the file path is copied as an image
+- Only tested on macOS
+- May require additional permissions or configurations
 
-**Notes**
+### copyPathAsImage
+
+Copies a file path as an image to the clipboard.
+
+#### copyPathAsImage example
+
+```ts
+await copyPathAsImage("/path/to/file.txt")
+```
+
 - Only tested on macOS
 - May require additional permissions or configurations
 
 ### getWindows
 
-**Description**
 Retrieves information about open windows.
 
-**Signature**
-
-```ts
-async function getWindows(): Promise<WindowInfo[]>
-```
-
-**Usage**
+#### getWindows example
 
 ```ts
 let windows = await getWindows()
 ```
 
-**Returns**
-- An array of WindowInfo objects containing information about open windows
-
-**Notes**
 - Only tested on macOS
 - May require additional permissions or configurations
 
 ### getWindowsBounds
 
-**Description**
 Retrieves the bounds of open windows.
 
-**Signature**
-
-```ts
-async function getWindowsBounds(): Promise<WindowBounds[]>
-```
-
-**Usage**
+#### getWindowsBounds example
 
 ```ts
 let bounds = await getWindowsBounds()
 ```
 
-**Returns**
-- An array of WindowBounds objects containing the bounds of open windows
-
-**Notes**
 - Only tested on macOS
 - May require additional permissions or configurations
 
@@ -1536,127 +1246,62 @@ let bounds = await getWindowsBounds()
 
 ### trash
 
-**Description**
 Moves files or directories to the trash.
 
-**Signature**
-
-```ts
-async function trash(paths: string | string[]): Promise<void>
-```
-
-**Usage**
+#### trash example
 
 ```ts
 await trash("/path/to/file.txt")
 ```
 
-**Returns**
-- A promise that resolves when the files or directories are moved to the trash
-
-**Notes**
 - Only tested on macOS
 - May require additional permissions or configurations
 
 ### git
 
-**Description**
 Git utility functions.
 
-**Signature**
-
-```ts
-const git = {
-  clone: async (repoUrl: string, destPath: string): Promise<void>,
-  pull: async (repoPath: string): Promise<void>,
-  push: async (repoPath: string): Promise<void>,
-  ...
-}
-```
-
-**Usage**
+#### git example
 
 ```ts
 await git.clone("https://github.com/user/repo.git", "/path/to/repo")
 ```
 
-**Returns**
-- Promises that resolve when the git operations are completed
-
-**Notes**
-- Requires a Pro subscription
+- Only tested on macOS
 - May require additional permissions or configurations
 
 ### degit
 
-**Description**
 Clones a GitHub repository using degit.
 
-**Signature**
+#### degit example
 
-```ts
-async function degit(repoUrl: string, destPath: string): Promise<void>
-```
-
-**Usage**
 
 ```ts
 await degit("https://github.com/user/repo.git", "/path/to/repo")
 ```
 
-**Returns**
-- A promise that resolves when the repository is cloned
-
-**Notes**
-- Requires a Pro subscription
+- Only tested on macOS
 - May require additional permissions or configurations
 
 ### openApp
 
-**Description**
 Opens an application.
 
-**Signature**
-
-```ts
-async function openApp(appName: string): Promise<void>
-```
-
-**Usage**
+#### openApp example
 
 ```ts
 await openApp("Google Chrome")
 ```
 
-**Returns**
-- A promise that resolves when the application is opened
-
-**Notes**
 - Only tested on macOS
 - May require additional permissions or configurations
 
-## Misc APIs
-
 ### createGist
 
-**Description**
 Creates a GitHub gist.
 
-**Signature**
-
-```ts
-async function createGist(options: {
-  description?: string,
-  public?: boolean,
-  files: {
-    [fileName: string]: {
-      content: string,
-    },
-  },
-}): Promise<string>
-```
-
-**Usage**
+#### createGist example
 
 ```ts
 let gistUrl = await createGist({
@@ -1670,369 +1315,163 @@ let gistUrl = await createGist({
 })
 ```
 
-**Returns**
-- A string containing the URL of the created gist
-
-**Notes**
-- Requires a Pro subscription
+- Only tested on macOS
 - May require additional permissions or configurations
 
 ### npm
 
-**Description**
+> Deprecated: Use standard `import` instead.
+
 Installs an npm package.
 
-**Signature**
-
-```ts
-async function npm(packageName: string): Promise<void>
-```
-
-**Usage**
+#### npm example
 
 ```ts
 await npm("lodash")
 ```
 
-**Returns**
-- A promise that resolves when the package is installed
-
-**Notes**
-- Requires a Pro subscription
+- Only tested on macOS
 - May require additional permissions or configurations
 
 ### attemptImport
 
-**Description**
 Attempts to import a module.
 
-**Signature**
-
-```ts
-async function attemptImport(moduleName: string): Promise<any>
-```
-
-**Usage**
+#### attemptImport example
 
 ```ts
 let module = await attemptImport("lodash")
 ```
 
-**Returns**
-- The imported module or null if it couldn't be imported
-
-**Notes**
-- Requires a Pro subscription
-- May require additional permissions or configurations
-
 ### silentAttemptImport
 
-**Description**
 Attempts to import a module silently.
 
-**Signature**
-
-```ts
-async function silentAttemptImport(moduleName: string): Promise<any>
-```
-
-**Usage**
+#### silentAttemptImport example
 
 ```ts
 let module = await silentAttemptImport("lodash")
 ```
 
-**Returns**
-- The imported module or null if it couldn't be imported
-
-**Notes**
-- Requires a Pro subscription
+- Only tested on macOS
 - May require additional permissions or configurations
 
 ### store
 
-**Description**
 Stores data in a persistent key-value store.
 
-**Signature**
-
-```ts
-const store = {
-  get: async (key: string): Promise<any>,
-  set: async (key: string, value: any): Promise<void>,
-  ...
-}
-```
-
-**Usage**
+#### store example
 
 ```ts
 await store.set("myKey", "myValue")
 let value = await store.get("myKey")
 ```
 
-**Returns**
-- Promises that resolve when the store operations are completed
-
-**Notes**
-- Requires a Pro subscription
+- Only tested on macOS
 - May require additional permissions or configurations
 
 
 ### db
 
-**Description**
 An extremely simple database that persists to a file.
-
-**Signature**
-
-```ts
-
-```
-
-
-
-
-
-
-
-
-
 
 
 ### memoryMap
 
-**Description**
 Manages a memory map of objects.
 
-**Signature**
-
-```ts
-const memoryMap = {
-  get: (key: string) => any,
-  set: (key: string, value: any) => void,
-  ...
-}
-```
-
-**Usage**
+#### memoryMap example
 
 ```ts
 memoryMap.set("myKey", { myObject: true })
 let value = memoryMap.get("myKey")
 ```
 
-**Returns**
-- The retrieved object or undefined if the key doesn't exist
-
-**Notes**
-- Requires a Pro subscription
-- May require additional permissions or configurations
-
 ### show
 
-**Description**
 Shows the main prompt.
 
-**Signature**
-
-```ts
-async function show(): Promise<void>
-```
-
-**Usage**
+#### show example
 
 ```ts
 await show()
 ```
 
-**Returns**
-- A promise that resolves when the main prompt is shown
-
-**Notes**
-- Requires a Pro subscription
-- May require additional permissions or configurations
-
 ### hide
 
-**Description**
 Hides the main prompt.
 
-**Signature**
-
-```ts
-async function hide(): Promise<void>
-```
-
-**Usage**
+#### hide example
 
 ```ts
 await hide()
 ```
 
-**Returns**
-- A promise that resolves when the main prompt is hidden
-
-**Notes**
-- Requires a Pro subscription
-- May require additional permissions or configurations
-
 ### setPanel
 
-**Description**
 Sets the panel content.
 
-**Signature**
-
-```ts
-async function setPanel(content: string): Promise<void>
-```
-
-**Usage**
+#### setPanel example
 
 ```ts
 await setPanel("<h1>Hello, world!</h1>")
 ```
 
-**Returns**
-- A promise that resolves when the panel content is set
-
-**Notes**
-- Requires a Pro subscription
-- May require additional permissions or configurations
-
 ### setPrompt
 
-**Description**
 Sets the prompt content.
 
-**Signature**
-
-```ts
-async function setPrompt(content: string): Promise<void>
-```
-
-**Usage**
+#### setPrompt example
 
 ```ts
 await setPrompt("<h1>Enter your name:</h1>")
 ```
 
-**Returns**
-- A promise that resolves when the prompt content is set
-
-**Notes**
-- Requires a Pro subscription
-- May require additional permissions or configurations
-
 ### setPreview
 
-**Description**
 Sets the preview content.
 
-**Signature**
-
-```ts
-async function setPreview(content: string): Promise<void>
-```
-
-**Usage**
+#### setPreview example
 
 ```ts
 await setPreview("<h1>Preview</h1>")
 ```
 
-**Returns**
-- A promise that resolves when the preview content is set
-
-**Notes**
-- Requires a Pro subscription
-- May require additional permissions or configurations
-
 ### setIgnoreBlur
 
-**Description**
 Sets whether to ignore blur events.
 
-**Signature**
-
-```ts
-async function setIgnoreBlur(ignore: boolean): Promise<void>
-```
-
-**Usage**
+#### setIgnoreBlur example
 
 ```ts
 await setIgnoreBlur(true)
 ```
 
-**Returns**
-- A promise that resolves when the ignore blur setting is set
-
-**Notes**
-- Requires a Pro subscription
-- May require additional permissions or configurations
-
 ### removeClipboardItem
 
-**Description**
 Removes an item from the clipboard.
 
-**Signature**
-
-```ts
-async function removeClipboardItem(item: ClipboardItem): Promise<void>
-```
-
-**Usage**
+#### removeClipboardItem example
 
 ```ts
 await removeClipboardItem(item)
 ```
 
-**Returns**
-- A promise that resolves when the item is removed from the clipboard
-
-**Notes**
-- Requires a Pro subscription
-- May require additional permissions or configurations
-
 ### clearClipboardHistory
 
-**Description**
 Clears the clipboard history.
 
-**Signature**
-
-```ts
-async function clearClipboardHistory(): Promise<void>
-```
-
-**Usage**
+#### clearClipboardHistory example
 
 ```ts
 await clearClipboardHistory()
 ```
 
-**Returns**
-- A promise that resolves when the clipboard history is cleared
-
-**Notes**
-- Requires a Pro subscription
-- May require additional permissions or configurations
-
 ### setScoredChoices
 
-**Description**
 Sets scored choices for a prompt.
 
-**Signature**
-
-```ts
-async function setScoredChoices(choices: ScoredChoice[]): Promise<void>
-```
-
-**Usage**
+#### setScoredChoices example
 
 ```ts
 await setScoredChoices([
@@ -2042,49 +1481,21 @@ await setScoredChoices([
 ])
 ```
 
-**Returns**
-- A promise that resolves when the scored choices are set
-
-**Notes**
-- Requires a Pro subscription
-- May require additional permissions or configurations
-
 ### setSelectedChoices
 
-**Description**
 Sets selected choices for a prompt.
 
-**Signature**
-
-```ts
-async function setSelectedChoices(choices: string[]): Promise<void>
-```
-
-**Usage**
+#### setSelectedChoices example
 
 ```ts
 await setSelectedChoices(["John", "Mindy"])
 ```
 
-**Returns**
-- A promise that resolves when the selected choices are set
-
-**Notes**
-- Requires a Pro subscription
-- May require additional permissions or configurations
-
 ### groupChoices
 
-**Description**
 Groups choices for a prompt.
 
-**Signature**
-
-```ts
-async function groupChoices(groups: ChoiceGroup[]): Promise<void>
-```
-
-**Usage**
+#### groupChoices example
 
 ```ts
 await groupChoices([
@@ -2093,25 +1504,11 @@ await groupChoices([
 ])
 ```
 
-**Returns**
-- A promise that resolves when the choices are grouped
-
-**Notes**
-- Requires a Pro subscription
-- May require additional permissions or configurations
-
 ### preload
 
-**Description**
 Preloads data for a prompt.
 
-**Signature**
-
-```ts
-async function preload(data: any): Promise<void>
-```
-
-**Usage**
+#### preload example
 
 ```ts
 await preload({
@@ -2120,28 +1517,11 @@ await preload({
 })
 ```
 
-**Returns**
-- A promise that resolves when the data is preloaded
-
-**Notes**
-- Requires a Pro subscription
-- May require additional permissions or configurations
-
 ### select
 
-**Description**
 Prompts the user to select one or more options.
 
-**Signature**
-
-```ts
-async function select(
-  prompt: string | PromptConfig,
-  choices: string[] | ChoiceObject[] | AsyncChoicesFunction
-): Promise<string | string[]>
-```
-
-**Usage**
+#### select example
 
 ```ts
 let multipleChoice = await select(
@@ -2150,28 +1530,11 @@ let multipleChoice = await select(
 )
 ```
 
-**Returns**
-- A string or an array of strings representing the selected options
-
-**Notes**
-- Requires a Pro subscription
-- May require additional permissions or configurations
-
 ### grid
 
-**Description**
 Prompts the user to select one or more options in a grid layout.
 
-**Signature**
-
-```ts
-async function grid(
-  prompt: string | PromptConfig,
-  choices: string[] | ChoiceObject[] | AsyncChoicesFunction
-): Promise<string | string[]>
-```
-
-**Usage**
+#### grid example
 
 ```ts
 let multipleChoice = await grid(
@@ -2180,253 +1543,52 @@ let multipleChoice = await grid(
 )
 ```
 
-**Returns**
-- A string or an array of strings representing the selected options
-
-**Notes**
-- Requires a Pro subscription
-- May require additional permissions or configurations
-
 ### mini
 
-**Description**
 Prompts the user for input in a compact format.
 
-**Signature**
-
-```ts
-async function mini(
-  prompt: string | PromptConfig,
-  choices: string[] | ChoiceObject[] | AsyncChoicesFunction
-): Promise<string | string[]>
-```
-
-**Usage**
-
+#### mini example
 ```ts
 let name = await mini("Enter your name")
 ```
 
-**Returns**
-- A string or an array of strings representing the user's input
-
-**Notes**
-- Requires a Pro subscription
-- May require additional permissions or configurations
-
 ### micro
 
-**Description**
 Prompts the user for input in a tiny, adorable format.
 
-**Signature**
-
-```ts
-async function micro(
-  prompt: string | PromptConfig,
-  choices: string[] | ChoiceObject[] | AsyncChoicesFunction
-): Promise<string | string[]>
-```
-
-**Usage**
+#### micro example
 
 ```ts
 let name = await micro("Enter your name")
 ```
 
-**Returns**
-- A string or an array of strings representing the user's input
-
-**Notes**
-- Requires a Pro subscription
-- May require additional permissions or configurations
-
 ### getMediaDevices
 
-**Description**
 Retrieves available media devices.
-
-**Signature**
-
-```ts
-async function getMediaDevices(): Promise<MediaDeviceInfo[]>
-```
-
-**Usage**
 
 ```ts
 let devices = await getMediaDevices()
 ```
 
-**Returns**
-- An array of MediaDeviceInfo objects representing the available media devices
-
-**Notes**
-- Requires a Pro subscription
-- May require additional permissions or configurations
-
 ### getTypedText
 
-**Description**
 Retrieves typed text from the user.
 
-**Signature**
-
 ```ts
-async function getTypedText(options?: {
-  placeholder?: string,
-  ...
-}): Promise<string>
+let text = await getTypedText()
 ```
-
-**Usage**
-
-```ts
-let text = await getTypedText({
-  placeholder: "Enter your name"
-})
-```
-
-**Returns**
-- A string containing the typed text
-
-**Notes**
-- Requires a Pro subscription
-- May require additional permissions or configurations
-
-### speech
-
-**Description**
-Speaks a given text using text-to-speech.
-
-**Signature**
-
-```ts
-async function speech(text: string): Promise<void>
-```
-
-**Usage**
-
-```ts
-await speech("Hello, world!")
-```
-
-**Returns**
-- A promise that resolves when the text is spoken
-
-**Notes**
-- Requires a Pro subscription
-- May require additional permissions or configurations
 
 ### toast
 
-**Description**
-Displays a small pop-up notification.
+Displays a small pop-up notification inside the Script Kit window.
 
-**Signature**
-
-```ts
-async function toast(text: string, options?: {
-  autoClose?: number | false,
-  pauseOnHover?: boolean,
-  ...
-}): Promise<void>
-```
-
-**Usage**
-
+#### toast example
 ```ts
 await toast("Hello from Script Kit!", {
   autoClose: 3000, // close after 3 seconds
   pauseOnFocusLoss: false
 })
 ```
-
-**Returns**
-- A promise that resolves when the notification is displayed
-
-**Notes**
-- Requires a Pro subscription
-- May require additional permissions or configurations
-
-### find
-
-**Description**
-Searches for files on the filesystem.
-
-**Signature**
-
-```ts
-async function find(query: string, options?: {
-  onlyin?: string,
-  ...
-}): Promise<string[]>
-```
-
-**Usage**
-
-```ts
-let results = await find("*.md", {
-  onlyin: home("Documents")
-})
-```
-
-**Returns**
-- An array of file paths matching the search query
-
-**Notes**
-- Requires a Pro subscription
-- May require additional permissions or configurations
-
-### webcam
-
-**Description**
-Prompts the user for webcam access and captures an image.
-
-**Signature**
-
-```ts
-async function webcam(): Promise<Buffer>
-```
-
-**Usage**
-
-```ts
-let buffer = await webcam()
-```
-
-**Returns**
-- A Buffer containing the captured image data
-
-**Notes**
-- Requires a Pro subscription
-- May require additional permissions or configurations
-
-**Notes**
-- Only available on macOS
-- Useful for scripting automation tasks
-
-**Usage**
-
-```ts
-await setWindowPosition("My App", 100, 100)
-```
-
-**Returns**
-- A promise that resolves when the window position is set
-
-**Notes**
-- Only tested on macOS.  
-- May require accessibility permissions.
-
-```ts
-setInterval(() => {
-  clock.setState({
-    date: new Date().toLocaleTimeString()
-  })
-}, 1000)
-```
-
 
 ### Closing Thoughts
 
