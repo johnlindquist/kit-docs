@@ -1,6 +1,6 @@
 {
   "type": "module",
   "dependencies": {
-    "@johnlindquist/kit": "file:../.kit"
+    "@johnlindquist/kit": "link:/Users/johnlindquist/.kit"
   }
 }
