@@ -672,13 +672,13 @@ Templating and interactivity can be added via [petite-vue](https://github.com/vu
 1. The first argument is a string of HTML to render in the window.
 2. Optional: the second argument is ["Browser Window Options"](https://www.electronjs.org/docs/latest/api/browser-window#new-browserwindowoptions)
 
-### widget example
+#### widget example
 
 ```ts
 await widget(`<h1 class="p-4 text-4xl">Hello World!</h1>`)
 ```
 
-### widget Clock
+#### widget Clock
 
 ```ts
 let clock = await widget(`<h1 class="text-7xl p-5 whitespace-nowrap">{{date}}</h1>`, {
@@ -695,7 +695,7 @@ setInterval(()=> {
 }, 1000)
 ```
 
-### widget Events
+#### widget Events
 
 ```ts
 
@@ -779,27 +779,6 @@ let result = await div({
 ```
 
 ## Pro APIs
-
-### widget
-
-Creates a persistent UI window with HTML content.
-
-#### widget example
-
-```ts
-let clock = await widget(`<h1 class="text-7xl p-5 whitespace-nowrap">{{date}}</h1>`, {
-  transparent: true,
-  draggable: true,
-  hasShadow: false,
-  alwaysOnTop: true,
-})
-
-setInterval(() => {
-  clock.setState({
-    date: new Date().toLocaleTimeString()
-  })
-}, 1000)
-```
 
 ### menubar
 
