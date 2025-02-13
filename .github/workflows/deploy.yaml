@@ -19,39 +19,21 @@ jobs:
         with:
           node-version: 18
 
-      # Add Yarn cache
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
-
-      - name: Restore Yarn cache
-        uses: actions/cache@v4
-        id: yarn-cache
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
-      # Add build cache for native modules
-      - name: Cache native builds
-        uses: actions/cache@v4
-        with:
-          path: |
-            host/.yarn/.cache
-            host/.yarn/build-state.yml
-            host/.yarn/install-state.gz
-          key: ${{ runner.os }}-yarn-native-${{ hashFiles('host/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-native-
-
-      - name: Install dependencies
+      # Install root dependencies first
+      - name: Install root dependencies
+        run: yarn install --immutable
+      
+      # Then install host dependencies
+      - name: Install host dependencies
+        working-directory: host
         run: yarn install --immutable
 
       - name: Check formatting
+        working-directory: host
         run: yarn format:check
 
       - name: Build website
+        working-directory: host
         run: yarn build
 
       - name: Upload Build Artifact
