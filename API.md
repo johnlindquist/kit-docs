@@ -323,19 +323,12 @@ Templating and interactivity can be added via [petite-vue](https://github.com/vu
 
 ## Pro APIs
 
-
-
-
-
 ### term
 
 Opens a built-in Terminal window.
 
 - Can run interactive commands
 - Supports custom working directory and shell
-
-
-
 
 
 ### showLogWindow
@@ -449,42 +442,24 @@ Tiles a specific window.
 - Only tested on macOS.  
 - May require accessibility permissions.
 
-
-
 ### scrapeSelector
 
 Scrapes a webpage using a CSS selector.
-
-- Requires a Pro subscription
-- May require additional permissions or configurations
-
 
 
 ### scrapeAttribute
 
 Scrapes a webpage and extracts an attribute value.
 
-- Requires a Pro subscription
-- May require additional permissions or configurations
-
-
 
 ### getScreenshotFromWebpage
 
 Captures a screenshot of a webpage.
 
-- Requires a Pro subscription
-- May require additional permissions or configurations
-
-
 
 ### getWebpageAsPdf
 
 Converts a webpage to a PDF.
-
-- Requires a Pro subscription
-- May require additional permissions or configurations
-
 
 
 ### applescript
@@ -493,8 +468,6 @@ Executes an applescript string
 
 - Only tested on macOS
 - May require additional permissions or configurations
-
-
 
 ### lock
 
