@@ -21,19 +21,17 @@ jobs:
 
       # Install root dependencies first
       - name: Install root dependencies
-        run: cd .. && yarn install --immutable
+        working-directory: ..
+        run: yarn install --immutable
       
       # Then install host dependencies
       - name: Install host dependencies
-        working-directory: host
         run: yarn install --immutable
 
       - name: Check formatting
-        working-directory: host
         run: yarn format:check
 
       - name: Build website
-        working-directory: host
         run: yarn build
 
       - name: Upload Build Artifact
