@@ -1,0 +1,1 @@
+let src = await scrapeAttribute("https://example.com", "img", "src")

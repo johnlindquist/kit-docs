@@ -1,0 +1,1 @@
+let name = await micro("Enter your name")

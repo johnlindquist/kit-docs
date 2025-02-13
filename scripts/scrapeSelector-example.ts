@@ -1,0 +1,1 @@
+let text = await scrapeSelector("https://example.com", "#main-content")

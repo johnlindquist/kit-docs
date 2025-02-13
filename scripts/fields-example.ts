@@ -1,0 +1,1 @@
+let [first, last] = await fields(["First name", "Last name"])

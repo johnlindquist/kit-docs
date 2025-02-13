@@ -1,0 +1,1 @@
+await openApp("Google Chrome")

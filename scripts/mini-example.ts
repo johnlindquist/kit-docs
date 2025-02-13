@@ -1,0 +1,1 @@
+let name = await mini("Enter your name")

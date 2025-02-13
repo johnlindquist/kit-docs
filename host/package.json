@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "docusaurus start",
-    "build": "docusaurus build",
+    "build": "tsx ../scripts/api-file-injection.ts && docusaurus build && tsx ../scripts/api-file-extraction.ts",
     "swizzle": "docusaurus swizzle",
     "deploy": "cross-env USE_SSH=true docusaurus deploy",
     "clear": "docusaurus clear",
@@ -13,7 +13,10 @@
     "write-heading-ids": "docusaurus write-heading-ids",
     "typecheck": "tsc",
     "format:fix": "prettier --write --list-different \"**/*.{ts,js,html,jsx,tsx,css,less,scss,json,vue}\"",
-    "format:check": "prettier --check \"**/*.{ts,js,html,jsx,tsx,css,less,scss,json,vue}\""
+    "format:check": "prettier --check \"**/*.{ts,js,html,jsx,tsx,css,less,scss,json,vue}\"",
+    "api-file-extraction": "tsx ../scripts/api-file-extraction.ts",
+    "api-file-injection": "tsx ../scripts/api-file-injection.ts",
+    "testing-kit": "./node_modules/@johnlindquist/kit/bin/kit"
   },
   "dependencies": {
     "@docusaurus/core": "3.2.1",
@@ -29,8 +32,10 @@
     "@docusaurus/module-type-aliases": "3.2.1",
     "@docusaurus/tsconfig": "3.2.1",
     "@docusaurus/types": "3.2.1",
+    "@johnlindquist/kit": "^3.12.3",
     "cross-env": "^7.0.3",
     "prettier": "^3.2.5",
+    "tsx": "^4.19.2",
     "typescript": "~5.2.2"
   },
   "browserslist": {

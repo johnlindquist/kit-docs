@@ -1,0 +1,1 @@
+await setPrompt("<h1>Enter your name:</h1>")

@@ -1,0 +1,1 @@
+await trash("/path/to/file.txt")

@@ -1,0 +1,1 @@
+await div(`Hello world!`, `bg-white text-black text-4xl p-4`)

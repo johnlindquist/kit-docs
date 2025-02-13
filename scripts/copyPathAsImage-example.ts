@@ -1,0 +1,1 @@
+await copyPathAsImage("/path/to/file.txt")

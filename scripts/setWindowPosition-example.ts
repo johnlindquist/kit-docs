@@ -1,0 +1,1 @@
+await setWindowPosition(12345, 100, 200)

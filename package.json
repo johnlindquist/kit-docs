@@ -1,6 +1,6 @@
 {
   "type": "module",
   "dependencies": {
-    "@johnlindquist/kit": "link:/Users/johnlindquist/.kit"
+    "@johnlindquist/kit": "^3.12.3"
   }
 }

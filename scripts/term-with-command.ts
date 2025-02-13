@@ -1,0 +1,1 @@
+await term(`cd ~/.kenv/scripts && ls`)

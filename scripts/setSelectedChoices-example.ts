@@ -1,0 +1,1 @@
+await setSelectedChoices(["John", "Mindy"])

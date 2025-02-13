@@ -1,0 +1,1 @@
+await degit("https://github.com/user/repo.git", "/path/to/repo")

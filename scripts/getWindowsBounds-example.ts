@@ -1,0 +1,1 @@
+let bounds = await getWindowsBounds()

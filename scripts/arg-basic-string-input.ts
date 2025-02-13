@@ -1,0 +1,1 @@
+let name = await arg("Enter your name")

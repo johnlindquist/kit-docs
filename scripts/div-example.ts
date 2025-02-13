@@ -1,0 +1,1 @@
+await div(`Hello world!`)

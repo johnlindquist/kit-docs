@@ -1,0 +1,1 @@
+let text = await template(`Hello $1!`)
