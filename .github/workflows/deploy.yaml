@@ -21,7 +21,7 @@ jobs:
 
       # Install root dependencies first
       - name: Install root dependencies
-        run: yarn install --immutable
+        run: cd .. && yarn install --immutable
       
       # Then install host dependencies
       - name: Install host dependencies
