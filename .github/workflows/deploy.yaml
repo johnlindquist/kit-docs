@@ -1,13 +1,12 @@
 name: Deploy to GitHub Pages
-
 on:
   push:
     branches:
       - main
-
-defaults:
-  run:
-    working-directory: host
+    
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -21,17 +20,19 @@ jobs:
 
       # Install root dependencies first
       - name: Install root dependencies
-        working-directory: ..
         run: yarn install --immutable
       
       # Then install host dependencies
       - name: Install host dependencies
+        working-directory: host
         run: yarn install --immutable
 
       - name: Check formatting
+        working-directory: host
         run: yarn format:check
 
       - name: Build website
+        working-directory: host
         run: yarn build
 
       - name: Upload Build Artifact
