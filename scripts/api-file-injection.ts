@@ -98,7 +98,7 @@ for (const section of sections) {
         {
           name: "scriptName",
           description: "Remove '// Foo:' comments",
-          match: (line) => !/^\/\/\s*\w+:/.test(line),
+          match: (line) => Boolean(/^\/\/\s*\w+:/.test(line)),
         },
         // Easy to add new rules:
         // {
@@ -112,7 +112,7 @@ for (const section of sections) {
         .split("\n")
         .filter((line) => !lineExclusionRules.some((rule) => rule.match(line)));
 
-      const filteredContent = filteredLines.join("\n");
+      const filteredContent = filteredLines.join("\n").trim();
 
       // Remove the ".ts" extension and generate a humanized header (first letter lowercased)
       const baseName = fileName.slice(0, -3);
@@ -124,7 +124,7 @@ for (const section of sections) {
       section.lines.push(`#### ${humanHeader}`);
       section.lines.push(""); // newline before the opening code fence
       section.lines.push("```ts");
-      section.lines.push(fileContent);
+      section.lines.push(filteredContent);
       section.lines.push("```");
       section.lines.push(""); // newline after the closing code fence
     }
