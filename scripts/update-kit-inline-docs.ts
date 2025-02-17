@@ -1,8 +1,11 @@
+metadata = {
+  alias: "ukid",
+  shortcut: "opt k",
+};
+
 import "@johnlindquist/kit";
 
-const kitSDKPath = await arg({
-  input: "/Users/johnlindquist/dev/kit",
-});
+const kitSDKPath = "/Users/johnlindquist/dev/kit";
 
 // Helper to convert header text to a slug (same as extraction)
 function toSlug(text: string): string {
@@ -43,6 +46,8 @@ const lines = content.split("\n");
 
 // Group lines into sections; a section starts with a header-3 ("### ") and includes all lines until the next header-3
 type Section = { header: string | null; lines: string[] };
+// Group lines into sections; a section starts with a header-3 ("### ")
+// and ends when a header of level 1 or 2 (i.e. "## " but not "### ") is encountered.
 const sections: Section[] = [];
 let currentSection: Section = { header: null, lines: [] };
 
@@ -53,15 +58,27 @@ for (const line of lines) {
       sections.push(currentSection);
     }
     currentSection = { header: line, lines: [] };
+  } else if (line.startsWith("## ") && !line.startsWith("### ")) {
+    // Encountering a level-1 or level-2 header ends the current section.
+    if (currentSection.header !== null || currentSection.lines.length > 0) {
+      sections.push(currentSection);
+    }
+    // Optionally, you can start a new section for the lower-level header,
+    // but if you only want to process level-3 sections, you can simply reset.
+    currentSection = { header: null, lines: [] };
   } else {
     currentSection.lines.push(line);
   }
 }
-// Push the final section
-sections.push(currentSection);
+// Push the final section if it has content
+if (currentSection.header !== null || currentSection.lines.length > 0) {
+  sections.push(currentSection);
+}
 
 // Process each section that starts with a header-3
+console.log("Processing sections...");
 for (const section of sections) {
+  console.log("Processing section:", section.header);
   if (section.header) {
     // Extract the header text (after "### ") and generate its slug
     const headerText = section.header.substring(4).trim();
@@ -69,7 +86,9 @@ for (const section of sections) {
 
     // Find any script files whose names start with this slug + "-" and end with ".ts"
     let matchingFiles = scriptFiles.filter(
-      (fileName) => fileName.startsWith(slug + "-") && fileName.endsWith(".ts")
+      (fileName) =>
+        fileName.toLowerCase().startsWith(slug.toLowerCase() + "-") &&
+        fileName.endsWith(".ts")
     );
 
     // Sort matching files so that those with exactly two words and the second word is "example" come first.
@@ -85,6 +104,15 @@ for (const section of sections) {
     for (const fileName of matchingFiles) {
       const filePath = path.join(scriptsDir, fileName);
       const fileContent = await readFile(filePath, "utf8");
+      // remove the line containing "import '@johnlindquist/kit'"
+      const lines = fileContent.split("\n");
+      const filteredLines = lines.filter(
+        (line) =>
+          !line.includes("import '@johnlindquist/kit'") &&
+          !line.includes('import "@johnlindquist/kit"') &&
+          !/^\/\/\s*\w+:/.test(line)
+      );
+      const filteredContent = filteredLines.join("\n");
 
       // Remove the ".ts" extension and generate a humanized header (first letter lowercased)
       const baseName = fileName.slice(0, -3);
@@ -96,7 +124,7 @@ for (const section of sections) {
       section.lines.push(`#### ${humanHeader}`);
       section.lines.push(""); // newline before the opening code fence
       section.lines.push("```ts");
-      section.lines.push(fileContent);
+      section.lines.push(filteredContent);
       section.lines.push("```");
       section.lines.push(""); // newline after the closing code fence
     }
@@ -146,50 +174,89 @@ async function updateTsFile(
   globalDocs: Map<string, string>
 ): Promise<void> {
   let tsContent = await readFile(tsPath, "utf-8");
+  let lines = tsContent.split("\n");
+  const newLines: string[] = [];
 
-  // This regex captures two groups:
-  //   group1: an optional preceding TSDoc block (including its newline) – if present.
-  //   group2: the declaration line (e.g. "   home: PathFn")
-  // It matches only if the declaration line is of the form (optional whitespace)(optional "var ")(word)(optional whitespace colon).
-  const regex = /(^[ \t]*)var\s+(\w+)\s*:/gm;
+  // Process the file line by line
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const trimmed = line.trim();
 
-  const updatedContent = tsContent.replace(regex, (match, indent, varName) => {
-    if (globalDocs.has(varName)) {
-      let docText = globalDocs.get(varName)!;
-      const rawLines = docText.split("\n");
-      let inCodeBlock = false;
-      const processedLines: string[] = [];
-      for (const line of rawLines) {
-        if (line.trim().startsWith("```")) {
-          inCodeBlock = !inCodeBlock;
-          processedLines.push(line);
-          continue;
+    // Check if this line is a var declaration (it must start with "var ")
+    if (trimmed.startsWith("var ")) {
+      // Extract the variable name using a regex
+      const varMatch = trimmed.match(/^var\s+(\w+)\s*:/);
+      if (varMatch) {
+        const varName = varMatch[1];
+        // Only update if we have documentation for this var
+        if (globalDocs.has(varName)) {
+          let docText = globalDocs.get(varName)!;
+          const rawLines = docText.split("\n");
+          let inCodeBlock = false;
+          const processedLines: string[] = [];
+
+          // Process the markdown lines (skip extra blank lines outside code blocks)
+          for (const rawLine of rawLines) {
+            if (rawLine.trim().startsWith("```")) {
+              inCodeBlock = !inCodeBlock;
+              processedLines.push(rawLine);
+              continue;
+            }
+            if (!inCodeBlock && rawLine.trim() === "") continue;
+            processedLines.push(rawLine);
+          }
+          while (processedLines.length && processedLines[0].trim() === "") {
+            processedLines.shift();
+          }
+          while (
+            processedLines.length &&
+            processedLines[processedLines.length - 1].trim() === ""
+          ) {
+            processedLines.pop();
+          }
+
+          // Use the current line's indentation for the comment
+          const indent = line.match(/^\s*/)?.[0] || "";
+          const commentLines = processedLines.map((l) => `${indent} * ${l}`);
+          commentLines.push(
+            `${indent} * @see https://johnlindquist.github.io/kit-docs/#${varName}`
+          );
+          commentLines.push(
+            `${indent} * More examples:
+${indent} * @see https://scriptkit.com?query=${varName}`
+          );
+          const newCommentBlock = `${indent}/**\n${commentLines.join(
+            "\n"
+          )}\n${indent} */`;
+
+          // Check if there is an existing TSDoc comment block immediately before the var line.
+          // If so, remove it from the newLines array.
+          if (
+            newLines.length &&
+            newLines[newLines.length - 1].trim().endsWith("*/")
+          ) {
+            let j = newLines.length - 1;
+            while (j >= 0 && !newLines[j].trim().startsWith("/**")) {
+              j--;
+            }
+            if (j >= 0) {
+              newLines.splice(j, newLines.length - j);
+            }
+          }
+
+          // Insert the new TSDoc block and then the var declaration line
+          newLines.push(newCommentBlock);
+          newLines.push(line);
+          continue; // Move on to the next line
         }
-        if (!inCodeBlock && line.trim() === "") continue;
-        processedLines.push(line);
       }
-      while (processedLines.length && processedLines[0].trim() === "") {
-        processedLines.shift();
-      }
-      while (
-        processedLines.length &&
-        processedLines[processedLines.length - 1].trim() === ""
-      ) {
-        processedLines.pop();
-      }
-      const commentLines = processedLines.map((line) => `${indent} * ${line}`);
-      commentLines.push(
-        `${indent} * @see https://johnlindquist.github.io/kit-docs/#${varName.toLowerCase()}`
-      );
-      let commentBlock = `${indent}/**\n${commentLines.join(
-        "\n"
-      )}\n${indent} */\n`;
-      commentBlock = commentBlock.replace(/\n{2,}/g, "\n");
-      return commentBlock + `${indent}var ${varName}:`;
     }
-    return match;
-  });
 
+    // Otherwise, leave the line unchanged
+    newLines.push(line);
+  }
+
+  const updatedContent = newLines.join("\n");
   await writeFile(tsPath, updatedContent, "utf-8");
 }
 
@@ -207,3 +274,32 @@ for (const tsFilePath of tsFilePaths) {
   await updateTsFile(tsFilePath, globalDocs);
   console.log("Done updating globals in", tsFilePath);
 }
+
+type LineRule = {
+  name: string;
+  description: string;
+  match: (line: string) => boolean;
+};
+
+const lineExclusionRules: LineRule[] = [
+  {
+    name: "kitImport",
+    description: "Remove Kit SDK import statements",
+    match: (line) => Boolean(line.match(/import ['"]@johnlindquist\/kit['"]/)),
+  },
+  {
+    name: "scriptName",
+    description: "Remove Script name comments",
+    match: (line) => line.startsWith("// Name:"),
+  },
+  // Easy to add new rules:
+  // {
+  //   name: "metadata",
+  //   description: "Remove metadata blocks",
+  //   match: (line) => line.startsWith("metadata = {"),
+  // },
+];
+
+const filteredLines = lines.filter(
+  (line) => !lineExclusionRules.some((rule) => rule.match(line))
+);
