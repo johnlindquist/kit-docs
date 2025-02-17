@@ -124,7 +124,7 @@ for (const section of sections) {
       section.lines.push(`#### ${humanHeader}`);
       section.lines.push(""); // newline before the opening code fence
       section.lines.push("```ts");
-      section.lines.push(filteredContent);
+      section.lines.push(fileContent);
       section.lines.push("```");
       section.lines.push(""); // newline after the closing code fence
     }
