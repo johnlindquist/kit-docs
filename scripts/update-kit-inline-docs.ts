@@ -122,7 +122,7 @@ for (const section of sections) {
         {
           name: "scriptName",
           description: "Remove '// Foo:' comments",
-          match: (line) => !/^\/\/\s*\w+:/.test(line),
+          match: (line) => Boolean(/^\/\/\s*\w+:/.test(line)),
         },
         // Easy to add new rules:
         // {
@@ -243,11 +243,7 @@ async function updateTsFile(
           const indent = line.match(/^\s*/)?.[0] || "";
           const commentLines = processedLines.map((l) => `${indent} * ${l}`);
           commentLines.push(
-            `${indent} * @see https://johnlindquist.github.io/kit-docs/#${varName}`
-          );
-          commentLines.push(
-            `${indent} * More examples:
-${indent} * @see https://scriptkit.com?query=${varName}`
+            `${indent} [Examples](https://scriptkit.com?query=${varName}) | [Docs](https://johnlindquist.github.io/kit-docs/#${varName}) | [Discussions](https://github.com/johnlindquist/kit/discussions?discussions_q=${varName})`
           );
           const newCommentBlock = `${indent}/**\n${commentLines.join(
             "\n"
