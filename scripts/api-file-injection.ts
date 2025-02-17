@@ -37,33 +37,40 @@ let scriptFiles = await readdir(scriptsDir);
 // Split content into lines
 const lines = content.split("\n");
 
-// Group lines into sections; a section starts with a header-3 ("### ") and includes all lines until the next header-3
-type Section = { header: string | null; lines: string[] };
+// Group lines into sections based on headers.
+// Each section starts with a header line (which is stored in the section if present)
+// and a flag (injection) is set to true if the header is level 3 ("### ").
+type Section = { header: string | null; lines: string[]; injection: boolean };
 const sections: Section[] = [];
-let currentSection: Section = { header: null, lines: [] };
+let currentSection: Section = { header: null, lines: [], injection: false };
 
+const headerRegex = /^(#{1,6})\s/;
 for (const line of lines) {
-  if (line.startsWith("### ")) {
-    // Start a new section – push the previous one if it exists
+  const headerMatch = line.match(headerRegex);
+  if (headerMatch) {
+    // When we hit any header, first push the current section if it has content.
     if (currentSection.header !== null || currentSection.lines.length > 0) {
       sections.push(currentSection);
     }
-    currentSection = { header: line, lines: [] };
-  } else {
-    currentSection.lines.push(line);
+    const level = headerMatch[1].length;
+    // Mark sections that start with a level-3 header for injection.
+    currentSection = { header: line, lines: [], injection: level === 3 };
+    continue; // header line is stored in .header, so skip adding it to .lines
   }
+  // Otherwise, just add the line to the current section.
+  currentSection.lines.push(line);
 }
-// Push the final section
+// Push any remaining lines as a section.
 sections.push(currentSection);
 
-// Process each section that starts with a header-3
+// Process each section that is marked for injection (i.e. sections with a level-3 header)
 for (const section of sections) {
-  if (section.header) {
-    // Extract the header text (after "### ") and generate its slug
+  if (section.injection && section.header) {
+    // Extract header text (removing the "### ") and generate a slug.
     const headerText = section.header.substring(4).trim();
     const slug = toSlug(headerText);
 
-    // Find any script files whose names start with this slug + "-" and end with ".ts"
+    // Find script files whose names start with slug + "-" and end with ".ts"
     let matchingFiles = scriptFiles.filter(
       (fileName) => fileName.startsWith(slug + "-") && fileName.endsWith(".ts")
     );
@@ -77,7 +84,7 @@ for (const section of sections) {
       return a.localeCompare(b);
     });
 
-    // For each matching file, build an injection block and append it to the section's lines
+    // For each matching file, build and append the injection block.
     for (const fileName of matchingFiles) {
       const filePath = path.join(scriptsDir, fileName);
       const fileContent = await readFile(filePath, "utf8");
@@ -100,12 +107,7 @@ for (const section of sections) {
           description: "Remove '// Foo:' comments",
           match: (line) => Boolean(/^\/\/\s*\w+:/.test(line)),
         },
-        // Easy to add new rules:
-        // {
-        //   name: "metadata",
-        //   description: "Remove metadata blocks",
-        //   match: (line) => line.startsWith("metadata = {"),
-        // },
+        // You can easily add more rules here.
       ];
 
       const filteredLines = fileContent
@@ -114,7 +116,7 @@ for (const section of sections) {
 
       const filteredContent = filteredLines.join("\n").trim();
 
-      // Remove the ".ts" extension and generate a humanized header (first letter lowercased)
+      // Remove the ".ts" extension and generate a humanized header (with only the first letter lowercased)
       const baseName = fileName.slice(0, -3);
       const humanHeader = humanizeAndLowercase(baseName);
 
@@ -122,16 +124,16 @@ for (const section of sections) {
       // the code block (starting with "```ts"), then a blank line after the code block.
       section.lines.push("");
       section.lines.push(`#### ${humanHeader}`);
-      section.lines.push(""); // newline before the opening code fence
+      section.lines.push("");
       section.lines.push("```ts");
       section.lines.push(filteredContent);
       section.lines.push("```");
-      section.lines.push(""); // newline after the closing code fence
+      section.lines.push("");
     }
   }
 }
 
-// Reassemble the updated content and write it back to the markdown file
+// Reassemble the updated content from all sections.
 let newContent = "";
 for (const section of sections) {
   if (section.header) {
