@@ -82,6 +82,38 @@ for (const section of sections) {
       const filePath = path.join(scriptsDir, fileName);
       const fileContent = await readFile(filePath, "utf8");
 
+      type LineRule = {
+        name: string;
+        description: string;
+        match: (line: string) => boolean;
+      };
+
+      const lineExclusionRules: LineRule[] = [
+        {
+          name: "kitImport",
+          description: "Remove Kit SDK import statements",
+          match: (line) =>
+            Boolean(line.match(/import ['"]@johnlindquist\/kit['"]/)),
+        },
+        {
+          name: "scriptName",
+          description: "Remove '// Foo:' comments",
+          match: (line) => !/^\/\/\s*\w+:/.test(line),
+        },
+        // Easy to add new rules:
+        // {
+        //   name: "metadata",
+        //   description: "Remove metadata blocks",
+        //   match: (line) => line.startsWith("metadata = {"),
+        // },
+      ];
+
+      const filteredLines = fileContent
+        .split("\n")
+        .filter((line) => !lineExclusionRules.some((rule) => rule.match(line)));
+
+      const filteredContent = filteredLines.join("\n");
+
       // Remove the ".ts" extension and generate a humanized header (first letter lowercased)
       const baseName = fileName.slice(0, -3);
       const humanHeader = humanizeAndLowercase(baseName);
@@ -92,7 +124,7 @@ for (const section of sections) {
       section.lines.push(`#### ${humanHeader}`);
       section.lines.push(""); // newline before the opening code fence
       section.lines.push("```ts");
-      section.lines.push(fileContent);
+      section.lines.push(filteredContent);
       section.lines.push("```");
       section.lines.push(""); // newline after the closing code fence
     }

@@ -106,12 +106,36 @@ for (const section of sections) {
       const fileContent = await readFile(filePath, "utf8");
       // remove the line containing "import '@johnlindquist/kit'"
       const lines = fileContent.split("\n");
+      type LineRule = {
+        name: string;
+        description: string;
+        match: (line: string) => boolean;
+      };
+
+      const lineExclusionRules: LineRule[] = [
+        {
+          name: "kitImport",
+          description: "Remove Kit SDK import statements",
+          match: (line) =>
+            Boolean(line.match(/import ['"]@johnlindquist\/kit['"]/)),
+        },
+        {
+          name: "scriptName",
+          description: "Remove '// Foo:' comments",
+          match: (line) => !/^\/\/\s*\w+:/.test(line),
+        },
+        // Easy to add new rules:
+        // {
+        //   name: "metadata",
+        //   description: "Remove metadata blocks",
+        //   match: (line) => line.startsWith("metadata = {"),
+        // },
+      ];
+
       const filteredLines = lines.filter(
-        (line) =>
-          !line.includes("import '@johnlindquist/kit'") &&
-          !line.includes('import "@johnlindquist/kit"') &&
-          !/^\/\/\s*\w+:/.test(line)
+        (line) => !lineExclusionRules.some((rule) => rule.match(line))
       );
+
       const filteredContent = filteredLines.join("\n");
 
       // Remove the ".ts" extension and generate a humanized header (first letter lowercased)
@@ -274,32 +298,3 @@ for (const tsFilePath of tsFilePaths) {
   await updateTsFile(tsFilePath, globalDocs);
   console.log("Done updating globals in", tsFilePath);
 }
-
-type LineRule = {
-  name: string;
-  description: string;
-  match: (line: string) => boolean;
-};
-
-const lineExclusionRules: LineRule[] = [
-  {
-    name: "kitImport",
-    description: "Remove Kit SDK import statements",
-    match: (line) => Boolean(line.match(/import ['"]@johnlindquist\/kit['"]/)),
-  },
-  {
-    name: "scriptName",
-    description: "Remove Script name comments",
-    match: (line) => line.startsWith("// Name:"),
-  },
-  // Easy to add new rules:
-  // {
-  //   name: "metadata",
-  //   description: "Remove metadata blocks",
-  //   match: (line) => line.startsWith("metadata = {"),
-  // },
-];
-
-const filteredLines = lines.filter(
-  (line) => !lineExclusionRules.some((rule) => rule.match(line))
-);
