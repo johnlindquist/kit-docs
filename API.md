@@ -450,6 +450,70 @@ Open a file using the KIT_EDITOR env variable
 
 (For example, set KIT_EDITOR=/usr/local/bin/cursor)
 
+### run
+
+Run another script from the same kenv
+
+### home
+
+Create a path relative to the user's home directory
+
+### get
+
+An alias for axios.get
+
+### post
+
+An alias for axios.post
+
+### put
+
+An alias for axios.put
+
+### patch
+
+An alias for axios.patch
+
+### del
+
+An alias for axios.delete
+
+### download
+
+Download a file from a URL
+
+### replace
+
+Replace a string or regex in one or more files
+
+### md
+
+Convert markdown to HTML for rendering in prompts
+
+### compile
+
+Create a handlebars template compiler
+
+### uuid
+
+Generate a UUID
+
+### globby
+
+Glob a list of files
+
+### isFile
+
+Check if a path is a file
+
+### isDir
+
+Check if a path is a directory
+
+### isBin
+
+Check if a path can be executed
+
 ### browse
 
 Open a URL in the default browser.
@@ -634,16 +698,33 @@ The `metadata` object can include:
 - `response`: Allow REST API response
 - `index`: Order within group
 
-
 ## SDK Utils
 
 ### kitPath
 
 Create a path relative to the kit directory.
 
+### kenvPath
+
+Create a path relative to the "kenv" (kit environment) directory
+
+### tmpPath
+
+Create a path relative to a "kit" directory in the system temp directory
+
+> Note: The tmp directory is symlinked to the ~/.kenv/tmp directory for easy access
+
+### getScripts
+
+Get all scripts
+
+### selectScript
+
+Allows you to build a custom script selection menu
+
 ## Closing Thoughts
 
-#### Alternate Importing
+### Alternate Importing
 
 Also, you can import `kit` and access the APIs like so:
 
