@@ -25,6 +25,103 @@ With Script Kit open, type `docs` and hit enter.
 
 With any example open, press `cmd+p` to generate a script where you can experiment with examples contained in that section.
 
+## Basics
+
+### Script Imports
+
+Script Kit Scripts start with importing the SDK:
+
+```ts
+import "@johnlindquist/kit"
+```
+
+You can also import any other library from npm and Script Kit will prompt you to install it (if you haven't already installed it in the current kenv).
+
+```ts
+import { generateText } from 'ai';
+import { openai } from '@ai-sdk/openai'
+```
+
+### Top-Level await
+
+All scripts are top-level await and essentially run top to bottom. Expect to see a lot of `await` in the scripts.
+
+```ts
+const downloadMarkdownPattern = home("Downloads", "*.md");
+const files = await globby(downloadMarkdownPattern);
+
+let totalContent = "";
+for await (const file of files) {
+  const content = await readFile(file, "utf8");
+  totalContent += content;
+}
+
+await editor(totalContent);
+```
+
+### Global Helpers
+
+All scripts are standard node.js scripts with added helpers from the SDK. Many of the most common helpers are provided in the global scope to save you from having to import them. For example, the follow script requires no imports:
+
+```ts
+const url =
+  "https://raw.githubusercontent.com/johnlindquist/kit-docs/refs/heads/main/API.md";
+const response = await get(url);
+const content = response.data;
+const apiPath = home("Downloads", "API.md");
+await writeFile(apiPath, content);
+```
+
+### Script Metadata
+
+All metadata is optional. There are two metadata modes based on your preferences:
+
+#### Metadata Comments
+
+These are the defaults and have been around since Script Kit v1.
+
+```
+// Name: My Amazing Script
+```
+
+### Metadata Typed Global
+
+Introduced in Script Kit v3, these allow a fully-typed, autocomplete experience:∫
+
+```
+metadata = {
+  name: "My Amazing Script
+}
+```
+
+### metadata
+
+The `metadata` object can include:
+
+- `name`: Display name in Script Kit UI (defaults to filename)
+- `author`: Creator's name
+- `description`: Brief script summary
+- `enter`: Text shown on Enter button
+- `alias`: Alternative search term
+- `image`: Path to script icon
+- `shortcut`: Global keyboard shortcut, e.g, cmd+opt+4
+- `shortcode`: Execute when typed + space in menu
+- `trigger`: Execute when typed in menu
+- `expand`: Text expansion trigger (replaces deprecated `snippet`)
+- `keyword`: Search keyword for menu
+- `pass`: Pass menu input as arg (true/string/RegExp)
+- `group`: Menu organization category
+- `exclude`: Hide from menu
+- `watch`: File/dir to watch for changes
+- `log`: Disable logging if false
+- `background`: Run as background process
+- `system`: Trigger on system events (sleep/wake/etc)
+- `schedule`: Cron expression for timing
+- `access`: REST API access level (public/key/private)
+- `response`: Allow REST API response
+- `index`: Order within group### Metadata
+
+
 ## Prompts
 
 ### arg
@@ -35,6 +132,10 @@ With any example open, press `cmd+p` to generate a script where you can experime
 
 1. The first argument is a string or a prompt configuration object.
 2. The second argument is a list of choices, a string to render, or a function that returns choices or a string to render.
+
+### mini
+
+Same API as `arg`, but with a compact format.
 
 ### micro
 
@@ -158,6 +259,10 @@ A file search prompt
 ### webcam
 
 Prompt for webcam access. Press enter to capture an image buffer:
+
+### mic
+
+Record from the mic, get a buffer back
 
 ## Choices
 
@@ -600,6 +705,10 @@ Shows the main prompt.
 
 Hides the main prompt.
 
+### blur
+
+Returns focus to the previous app.
+
 ### setPanel
 
 Sets the panel content.
@@ -615,6 +724,10 @@ Sets the preview content.
 ### setIgnoreBlur
 
 Sets whether to ignore blur events.
+
+### getClipboardHistory
+
+Gets the clipboard history from the in-memory clipboard
 
 ### removeClipboardItem
 
@@ -648,13 +761,6 @@ Prompts the user to select one or more options.
 
 Prompts the user to select one or more options in a grid layout.
 
-### mini
-
-Prompts the user for input in a compact format.
-
-### micro
-
-Prompts the user for input in a tiny, adorable format.
 
 ### getMediaDevices
 
@@ -668,35 +774,22 @@ Retrieves typed text from the user.
 
 Displays a small pop-up notification inside the Script Kit window.
 
-### metadata
+### submit
 
-Define additional information and capabilities for your script:
+Forcefully submit a value from an open prompt
 
-The `metadata` object can include:
+### preventSubmit
 
-- `author`: Creator's name
-- `name`: Display name in Script Kit UI (defaults to filename)
-- `description`: Brief script summary
-- `enter`: Text shown on Enter button
-- `alias`: Alternative search term
-- `image`: Path to script icon
-- `shortcut`: Global keyboard shortcut
-- `shortcode`: Execute when typed + space in menu
-- `trigger`: Execute when typed in menu
-- `expand`: Text expansion trigger (replaces deprecated `snippet`)
-- `keyword`: Search keyword for menu
-- `pass`: Pass menu input as arg (true/string/RegExp)
-- `group`: Menu organization category
-- `exclude`: Hide from menu
-- `watch`: File/dir to watch for changes
-- `log`: Disable logging if false
-- `background`: Run as background process
-- `timeout`: Auto-terminate after seconds
-- `system`: Trigger on system events (sleep/wake/etc)
-- `schedule`: Cron expression for timing
-- `access`: REST API access level (public/key/private)
-- `response`: Allow REST API response
-- `index`: Order within group
+A symbol used to block submitting a prompt
+
+### wait
+
+Wait for a number of milliseconds
+
+### exit
+
+Exit the script completely
+
 
 ## SDK Utils
 

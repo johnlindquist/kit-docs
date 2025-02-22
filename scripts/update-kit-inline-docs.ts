@@ -284,6 +284,7 @@ const tsFilePaths = [
   path.resolve(kitSDKPath, "src", "types", "kit.d.ts"),
   path.resolve(kitSDKPath, "src", "types", "kitapp.d.ts"),
   path.resolve(kitSDKPath, "src", "types", "globals.d.ts"),
+  path.resolve(kitSDKPath, "src", "types", "packages.d.ts"),
   path.resolve(kitSDKPath, "src", "types", "pro.d.ts"),
   path.resolve(kitSDKPath, "src", "types", "platform.d.ts"),
 ];
