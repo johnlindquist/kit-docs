@@ -1,7 +1,7 @@
 ---
 slug: metadata
-title: "Metadata"
-sidebar_position: 5
+title: Metadata
+sidebar_position: 6
 ---
 
 # Metadata Reference

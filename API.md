@@ -332,6 +332,15 @@ Templating and interactivity can be added via [petite-vue](https://github.com/vu
 1. The first argument is a string of HTML to render in the window.
 2. Optional: the second argument is ["Browser Window Options"](https://www.electronjs.org/docs/latest/api/browser-window#new-browserwindowoptions)
 
+## Vite
+
+### vite
+
+A `vite` generates a vite project and opens it in its own window.
+
+1. The first argument is the name of the folder you want generated in ~/.kenv/vite/your-folder
+2. Optional: the second argument is ["Browser Window Options"](https://www.electronjs.org/docs/latest/api/browser-window#new-browserwindowoptions)
+
 ## Commands
 
 ### exec
