@@ -1,6 +1,6 @@
 ---
-slug: guide
-title: "Guide"
+slug: scriptlets
+title: "Scriptlets"
 sidebar_position: 2
 ---
 
