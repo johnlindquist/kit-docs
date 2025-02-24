@@ -264,6 +264,23 @@ Prompt for webcam access. Press enter to capture an image buffer:
 
 Record from the mic, get a buffer back
 
+### eyeDropper
+
+Grab a color from your desktop
+
+> Note: Behaves best on Mac. Windows _might_ be locked to only the Script Kit app prompt.
+
+```
+{
+    "sRGBHex": "#e092d9",
+    "rgb": "rgb(224, 146, 217)",
+    "rgba": "rgba(224, 146, 217, 1)",
+    "hsl": "hsl(305, 56%, 73%)",
+    "hsla": "hsla(305, 56%, 73%, 1)",
+    "cmyk": "cmyk(0%, 35%, 3%, 12%)"
+  }
+```
+
 ## Choices
 
 ### formatChoices
@@ -321,6 +338,42 @@ Send a system notification
 
 > Note: osx notifications require permissions for "Terminal Notifier" in the system preferences. Due to the complicated nature of configuring notifications, please use a search engine to find the latest instructions for your osx version.
 > In the Script Kit menu bar icon: "Permissions -> Request Notification Permissions" might help.
+
+## System
+
+### setSelectedText
+
+Paste text into the focused app. Literally triggers a "cmd/ctrl+v", so expect a similar behavior.
+
+## getSelectedText
+
+Grab text from the focused app. Literally triggers a "cmd?ctrl+c", so expect a similar behavior.
+
+### clipboard
+
+Read and write to the system clipboard
+
+### copy
+
+Copy a string to the clipboard. A simple alias for "clipboard.writeText()"
+
+### paste
+
+Grab a string from the clipboard into the script. A simple alias for "clipboard.readText()"
+
+> Note: This is often confused with `setSelectedText` which pastes a string where your text cursor is.
+
+### mouse
+
+> Note: Please use with caution
+
+move and click the system mouse
+
+### keyboard
+
+> Note: Please use with caution
+
+Type and/or tap keys on your keyboard
 
 ## Widget
 
