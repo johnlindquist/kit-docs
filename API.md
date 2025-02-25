@@ -303,6 +303,27 @@ Returns the formatted array of choices.
 
 ## Advanced
 
+### Actions (cmd+k)
+
+Actions are available on all prompts. Actions allow you to insert custom behaviors outside of the normal flow of the script:
+
+<!-- SCRIPT: arg-actions-example -->
+
+### flag
+
+A flag is almost exclusively used for the CLI, rarely with a prompt. When using a CLI script:
+
+```bash
+my-script --debug --exclude "*.md"
+```
+
+The flags in your script will be set as:
+
+```ts
+flag.debug = true
+flag.exclude = "*.md"
+```
+
 ### onTab
 
 onTab allows you to build a menu where prompts are organized under a tab. Press Tab/Shift+Tab to navigate between prompts.
