@@ -309,6 +309,10 @@ Actions are available on all prompts. Actions allow you to insert custom behavio
 
 <!-- SCRIPT: arg-actions-example -->
 
+<!-- SCRIPT: div-actions-example -->
+
+<!-- SCRIPT: editor-actions-example -->
+
 ### flag
 
 A flag is almost exclusively used for the CLI, rarely with a prompt. When using a CLI script:
@@ -323,6 +327,12 @@ The flags in your script will be set as:
 flag.debug = true
 flag.exclude = "*.md"
 ```
+
+### css
+
+You can inject css into any prompt to override styles
+
+<!-- SCRIPT: div-css-example -->
 
 ### onTab
 
