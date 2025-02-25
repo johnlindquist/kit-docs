@@ -34,7 +34,92 @@ let content = await readFile(apiPath, "utf8");
 // Get a list of all files in the scripts folder
 let scriptFiles = await readdir(scriptsDir);
 
-// Split content into lines
+// Create a map of script files for quick lookup by name
+const scriptFileMap = new Map<string, string>();
+for (const fileName of scriptFiles) {
+  if (fileName.endsWith(".ts")) {
+    const baseName = fileName.slice(0, -3); // remove ".ts"
+    scriptFileMap.set(baseName, fileName);
+  }
+}
+
+// Track scripts that have been processed via markers to avoid duplicates
+const processedScripts = new Set<string>();
+
+// Define line exclusion rules
+type LineRule = {
+  name: string;
+  description: string;
+  match: (line: string) => boolean;
+};
+
+const lineExclusionRules: LineRule[] = [
+  {
+    name: "kitImport",
+    description: "Remove Kit SDK import statements",
+    match: (line) => Boolean(line.match(/import ['"]@johnlindquist\/kit['"]/)),
+  },
+  {
+    name: "scriptName",
+    description: "Remove '// Foo:' comments",
+    match: (line) => Boolean(/^\/\/\s*\w+:/.test(line)),
+  },
+  {
+    name: "metadata",
+    description: "Remove metadata blocks",
+    match: (line) => line.startsWith("metadata = {"),
+  },
+];
+
+// First, process all marker scripts (simple find and replace)
+// The marker format is: <!-- SCRIPT: script-name -->
+const markerRegex = /<!--\s*SCRIPT:\s*([a-zA-Z0-9-_]+)\s*-->/g;
+let markerMatch;
+let markerProcessed = 0;
+
+while ((markerMatch = markerRegex.exec(content)) !== null) {
+  const scriptName = markerMatch[1];
+  const scriptFileName = scriptFileMap.get(scriptName);
+
+  if (scriptFileName) {
+    // Found the script file, read its content
+    const filePath = path.join(scriptsDir, scriptFileName);
+    const fileContent = await readFile(filePath, "utf8");
+
+    // Filter the script content
+    const filteredLines = fileContent
+      .split("\n")
+      .filter((line) => !lineExclusionRules.some((rule) => rule.match(line)));
+
+    const filteredContent = filteredLines.join("\n").trim();
+
+    // Generate a humanized header
+    const humanHeader = humanizeAndLowercase(scriptName);
+
+    // Replace the marker with the formatted script content
+    content = content.replace(
+      markerMatch[0], // The marker comment
+      `#### ${humanHeader}
+
+\`\`\`ts
+${filteredContent}
+\`\`\`
+`
+    );
+
+    // Track that this script has been processed
+    processedScripts.add(scriptFileName);
+
+    markerProcessed++;
+    console.log(`Processed marker script: ${scriptName}`);
+  } else {
+    console.warn(
+      `Warning: Script '${scriptName}' referenced in marker not found`
+    );
+  }
+}
+
+// Now process sections for regular injections
 const lines = content.split("\n");
 
 // Group lines into sections based on headers.
@@ -64,6 +149,7 @@ for (const line of lines) {
 sections.push(currentSection);
 
 // Process each section that is marked for injection (i.e. sections with a level-3 header)
+let regularScriptsProcessed = 0;
 for (const section of sections) {
   if (section.injection && section.header) {
     // Extract header text (removing the "### ") and generate a slug.
@@ -72,7 +158,10 @@ for (const section of sections) {
 
     // Find script files whose names start with slug + "-" and end with ".ts"
     let matchingFiles = scriptFiles.filter(
-      (fileName) => fileName.startsWith(slug + "-") && fileName.endsWith(".ts")
+      (fileName) =>
+        fileName.startsWith(slug + "-") &&
+        fileName.endsWith(".ts") &&
+        !processedScripts.has(fileName) // Skip scripts already processed via markers
     );
 
     // Sort matching files so that those with exactly two words and the second word is "example" come first.
@@ -88,27 +177,6 @@ for (const section of sections) {
     for (const fileName of matchingFiles) {
       const filePath = path.join(scriptsDir, fileName);
       const fileContent = await readFile(filePath, "utf8");
-
-      type LineRule = {
-        name: string;
-        description: string;
-        match: (line: string) => boolean;
-      };
-
-      const lineExclusionRules: LineRule[] = [
-        {
-          name: "kitImport",
-          description: "Remove Kit SDK import statements",
-          match: (line) =>
-            Boolean(line.match(/import ['"]@johnlindquist\/kit['"]/)),
-        },
-        {
-          name: "scriptName",
-          description: "Remove '// Foo:' comments",
-          match: (line) => Boolean(/^\/\/\s*\w+:/.test(line)),
-        },
-        // You can easily add more rules here.
-      ];
 
       const filteredLines = fileContent
         .split("\n")
@@ -129,6 +197,9 @@ for (const section of sections) {
       section.lines.push(filteredContent);
       section.lines.push("```");
       section.lines.push("");
+
+      regularScriptsProcessed++;
+      console.log(`Processed regular script: ${baseName}`);
     }
   }
 }
@@ -143,4 +214,6 @@ for (const section of sections) {
 }
 
 await writeFile(apiPath, newContent, "utf8");
-console.log("Injection complete.");
+console.log(
+  `Injection complete: ${markerProcessed} marker scripts and ${regularScriptsProcessed} regular scripts processed.`
+);

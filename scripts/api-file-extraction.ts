@@ -7,42 +7,66 @@ const scriptsDir = path.dirname(new URL(import.meta.url).pathname);
 // Read the content of API.md
 let content = await readFile(apiPath, "utf8");
 
-// Regex pattern:
-// - Optionally matches a preceding newline (group 1)
-// - Matches a header line starting with "####" and captures the header text (group 2)
-// - Optionally allows a blank line before a fenced code block starting with "```ts"
-// - Captures all code until the closing "```" (group 3)
-// - Optionally matches a trailing newline (group 4)
-const regex = /(\n)?####\s+(.+?)\s*\n(?:\s*\n)?```ts\s*\n([\s\S]*?)\n```(\n)?/g;
-
-let match;
-let extractedCount = 0;
-
-// Loop through each match and write the code block to a separate file
-while ((match = regex.exec(content)) !== null) {
-  const headerText = match[2];
-  const codeContent = match[3];
-
-  // Generate a file name from the header text:
-  // - Lowercase, trim, replace spaces with dashes, remove non-word/dash characters, then append ".ts"
-  const fileName =
+// Helper to convert header text to a filename
+function headerToFilename(headerText: string): string {
+  return (
     headerText
       .split(" ")
       .map((word) => word.charAt(0).toLowerCase() + word.slice(1))
       .join("-")
       .trim()
-      .replace(/[^\w-]/g, "") + ".ts";
-
-  const filePath = path.join(scriptsDir, fileName);
-
-  await writeFile(filePath, codeContent, "utf8");
-  console.log(`Created file: ${filePath}`);
-  extractedCount++;
+      .replace(/[^\w-]/g, "") + ".ts"
+  );
 }
 
-// Remove the extracted sections completely (no newline or blank lines left behind)
-const newContent = content.replace(regex, "");
+// Track marker scripts to ensure we don't remove their comments
+const markerScripts = new Set<string>();
 
-// Write the cleaned content back to API.md
-await writeFile(apiPath, newContent, "utf8");
-console.log(`Removed ${extractedCount} extracted code block(s) from API.md.`);
+// First, find all marker comments and track them
+const markerRegex = /<!--\s*SCRIPT:\s*([a-zA-Z0-9-_]+)\s*-->/g;
+let markerMatch;
+while ((markerMatch = markerRegex.exec(content)) !== null) {
+  const scriptName = markerMatch[1];
+  markerScripts.add(scriptName);
+}
+
+// Regex pattern to find and extract code blocks
+const codeRegex = /####\s+(.+?)\s*\n\s*\n```ts\s*\n([\s\S]*?)\n```/g;
+let match;
+let extractedCount = 0;
+let markerCount = 0;
+
+// Process each match, extracting the code and handling markers appropriately
+while ((match = codeRegex.exec(content)) !== null) {
+  const headerText = match[1];
+  const codeContent = match[2];
+
+  // Generate a script name (without .ts) from the header
+  const scriptName = headerToFilename(headerText).slice(0, -3);
+  const fileName = scriptName + ".ts";
+  const filePath = path.join(scriptsDir, fileName);
+
+  // Save the extracted code to a file
+  await writeFile(filePath, codeContent, "utf8");
+
+  // Check if this is a marker script
+  const isMarkerScript = markerScripts.has(scriptName);
+
+  if (isMarkerScript) {
+    // Replace code block with the marker comment
+    content = content.replace(match[0], `<!-- SCRIPT: ${scriptName} -->`);
+    markerCount++;
+    console.log(`Extracted marker script: ${filePath}`);
+  } else {
+    // Remove the code block completely
+    content = content.replace(match[0], "");
+    extractedCount++;
+    console.log(`Extracted regular script: ${filePath}`);
+  }
+}
+
+// Write the updated content back to API.md
+await writeFile(apiPath, content, "utf8");
+console.log(
+  `Extraction complete: ${extractedCount} regular examples and ${markerCount} marker scripts processed.`
+);
