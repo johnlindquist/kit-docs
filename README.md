@@ -1,5 +1,7 @@
 <a name="top"></a>
-# Script Kit Docs
+# Script Kit Documentation
+
+This repository contains documentation for [Script Kit](https://scriptkit.com).
 
 https://johnlindquist.github.io/kit-docs/
 
@@ -26,7 +28,7 @@ Some markdown files at the repo root, such as this `README.md`, are ignored. See
 ## Installation
 
 To work with the documentation, you need to set up Docusaurus. This project uses modern [Yarn](https://yarnpkg.com/) 
-as package manager. Here’s how you can get started:
+as package manager. Here's how you can get started:
 
 1. We're assuming you have any Yarn executable installed on your machine.
 
