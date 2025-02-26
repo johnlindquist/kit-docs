@@ -19,14 +19,6 @@ If you have questions, please reach out on our [Script Kit GitHub Discussions](h
 
 Happy Scripting! ❤️ - John Lindquist
 
-<!-- This is a test comment to trigger a change in API-GENERATED.md -->
-
-### NEW TEST SECTION
-
-This is a new section that will definitely cause API-GENERATED.md to change.
-
-<!-- SCRIPT: non-existent-example -->
-
 ### Play with Examples in the App
 
 With Script Kit open, type `docs` and hit enter.
@@ -927,9 +919,3 @@ import kit from "@johnlindquist/kit"
 
 await kit.arg("Enter your name")
 ```
-
-## TEST HEADER SECTION
-
-This is a test section that will be removed later. Adding a level 2 header should definitely cause API-GENERATED.md to change.
-
-This is a new line added to test the pre-commit hook.
