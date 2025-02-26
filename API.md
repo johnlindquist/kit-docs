@@ -19,6 +19,8 @@ If you have questions, please reach out on our [Script Kit GitHub Discussions](h
 
 Happy Scripting! ❤️ - John Lindquist
 
+<!-- This is a test comment to trigger a change in API-GENERATED.md -->
+
 ### Play with Examples in the App
 
 With Script Kit open, type `docs` and hit enter.
