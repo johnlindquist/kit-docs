@@ -931,3 +931,5 @@ await kit.arg("Enter your name")
 ## TEST HEADER SECTION
 
 This is a test section that will be removed later. Adding a level 2 header should definitely cause API-GENERATED.md to change.
+
+This is a new line added to test the pre-commit hook.
