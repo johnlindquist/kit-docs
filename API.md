@@ -21,6 +21,12 @@ Happy Scripting! ❤️ - John Lindquist
 
 <!-- This is a test comment to trigger a change in API-GENERATED.md -->
 
+### NEW TEST SECTION
+
+This is a new section that will definitely cause API-GENERATED.md to change.
+
+<!-- SCRIPT: arg-example -->
+
 ### Play with Examples in the App
 
 With Script Kit open, type `docs` and hit enter.
