@@ -6,7 +6,7 @@ sidebar_position: 2
 
 # Scriptlets
 
-## Basics
+### Basics
 
 A scriptlet is a markdown file containing "mini scripts". Tiny actions that are grouped together.
 
@@ -19,7 +19,7 @@ Create a file `~/.kenv/scriptlets/url.md` with the following content.
 ~~~markdown
 # URLs
 
-## Script Kit
+### Script Kit
 
 ```ts
 await open('https://scriptkit.com')
@@ -34,7 +34,7 @@ await open('https://egghead.io')
 
 Each header 2 (##) will be added to the main Script Kit menu as a runnable script.
 
-## Shared Functionaltiy
+### Shared Functionaltiy
 
 A codefence declared under the header 1 will be avaiable to use in all of the header 2 codefences. The entire Script Kit api is available!
 
@@ -61,7 +61,7 @@ greet("Mindy")
 ```
 ~~~
 
-## Built-In Codefence Tools
+### Built-In Codefence Tools
 
 Scriptlets provide "codefence tools" which describe what to do with the text inside the codefence.
 
@@ -81,7 +81,7 @@ https://egghead.io
 ```
 ~~~
 
-### Example Codefence Tools
+#### Example Codefence Tools
 
 The following tools are supported:
 
@@ -211,7 +211,7 @@ const toolCommandMap = new Map([
 ~~~
 
 
-## Scriptlet Placeholders
+### Scriptlet Placeholders
 
 Any codefence can include a $0, $1, $2, etc to pormpt the user for finalized the scriptlet before it runs: 
 
