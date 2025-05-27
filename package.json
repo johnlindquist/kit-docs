@@ -1,9 +1,7 @@
 {
   "type": "module",
-  "dependencies": {
-    "@johnlindquist/kit": "^3.12.3"
-  },
   "devDependencies": {
+    "@johnlindquist/kit": "^3.21.0",
     "exit-hook": "^4.0.0",
     "express": "^4.21.2"
   }

@@ -122,6 +122,63 @@ The `metadata` object can include:
 - `index`: Order within group### Metadata
 
 
+## AI
+
+Script Kit provides several AI-related global helpers to make it easy to integrate AI and LLM-powered features into your scripts. These helpers allow you to generate text, interact with assistants, and work with structured outputs using schemas.
+
+### Setup
+
+Script Kit automatically loads AI-related environment variables from your `~/.kenv/.env` file. To configure your default AI provider, model, and other options, add the following variables to your `~/.kenv/.env`:
+
+- `AI_DEFAULT_PROVIDER` — Default AI provider (e.g. `openai`, `anthropic`, `google`, `xai`, `openrouter`)
+- `AI_DEFAULT_MODEL` — Default model for the provider (e.g. `gpt-4o`, `claude-3-opus-20240229`)
+- `AI_DEFAULT_TEMPERATURE` — Default temperature for completions (e.g. `0.7`)
+- `AI_DEFAULT_MAX_TOKENS` — Default max tokens for completions (e.g. `1000`)
+
+Example `~/.kenv/.env`:
+
+```env
+AI_DEFAULT_PROVIDER=anthropic
+AI_DEFAULT_MODEL=claude-3-opus-20240229
+AI_DEFAULT_TEMPERATURE=0.7
+AI_DEFAULT_MAX_TOKENS=1000
+```
+
+These values are used as defaults for all AI helpers (`ai`, `assistant`, `generate`). You can override them per-call by passing options to the helpers.
+
+### ai
+
+The `ai` helper creates a text generation function using a prompt. Use it to generate text completions based on user input or other data.
+
+### assistant
+
+The `assistant` helper creates an AI assistant that can maintain context and handle multi-turn conversations. You can add user and system messages, and stream responses to the UI.
+
+### generate
+
+The `generate` helper allows you to generate structured data from text using a schema (such as a Zod schema). This is useful for extracting information, performing analysis, or ensuring the output matches a specific format.
+
+### Switching AI Providers
+
+Script Kit supports multiple AI providers out of the box: `openai`, `anthropic`, `google`, `xai`, and `openrouter`.
+
+You can switch between providers by passing a model string in the format `provider:model-id` to the `model` option.
+
+```ts
+const result = await ai("Say hello", { model: "anthropic:claude-3-opus-20240229" })
+```
+
+This will use Anthropic's Claude 3 Opus model. Supported providers are:
+- `openai`
+- `anthropic`
+- `google`
+- `xai`
+- `openrouter`
+
+
+
+<!-- SCRIPT: ai-provider-switcher -->
+
 ## Prompts
 
 ### arg
@@ -919,3 +976,7 @@ import kit from "@johnlindquist/kit"
 
 await kit.arg("Enter your name")
 ```
+
+> **Advanced Usage:**
+>
+> For more advanced scenarios, you can import the [ai-sdk](https://ai-sdk.dev/docs/getting-started/nodejs) directly. Using Script Kit's helpers is not required—if you need features not provided by these helpers, feel free to use the ai-sdk, any other SDK, or any npm library directly in your scripts.

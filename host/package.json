@@ -16,6 +16,9 @@
     "format:check": "prettier --check \"**/*.{ts,js,html,jsx,tsx,css,less,scss,json,vue}\"",
     "api-file-extraction": "tsx ../scripts/api-file-extraction.ts",
     "api-file-injection": "tsx ../scripts/api-file-injection.ts",
+    "api-file-generation": "tsx ../scripts/api-file-generation.ts",
+    "api-file-generation-to-script-generator": "tsx ../scripts/api-file-generation-to-script-generator.ts",
+    "update-kit-inline-docs": "tsx ../scripts/update-kit-inline-docs.ts",
     "testing-kit": "./node_modules/@johnlindquist/kit/bin/kit"
   },
   "dependencies": {
@@ -32,7 +35,7 @@
     "@docusaurus/module-type-aliases": "3.2.1",
     "@docusaurus/tsconfig": "3.2.1",
     "@docusaurus/types": "3.2.1",
-    "@johnlindquist/kit": "^3.12.3",
+    "@johnlindquist/kit": "^3.19.0",
     "cross-env": "^7.0.3",
     "prettier": "^3.2.5",
     "tsx": "^4.19.2",
